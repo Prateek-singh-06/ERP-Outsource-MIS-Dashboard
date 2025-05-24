@@ -8,7 +8,7 @@ export default function Footer() {
       <p className="text-xs sm:text-base lg:text-lg font-semibold tracking-wide">
         Developed by&nbsp;
         <span className="hover:underline transition">
-          Manurbhav Arya & Team
+          Anirban Mukherjee & Team
         </span>
       </p>
 
@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="flex items-center space-x-3 mb-1">
         {/* LinkedIn */}
         <a
-          href="https://www.linkedin.com/in/manurbhav-arya-647533247/"
+          href="https://www.linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-blue-400 transition"
@@ -27,7 +27,7 @@ export default function Footer() {
 
         {/* Email */}
         <a
-          href="mailto:manurbhav16@gmail.com"
+          href=""
           className="hover:text-blue-400 transition"
           aria-label="Email"
         >
@@ -36,7 +36,7 @@ export default function Footer() {
 
         {/* Portfolio */}
         <a
-          href="https://portfolio-mannubhai1s-projects.vercel.app/"
+          href=" "
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-blue-400 transition"
