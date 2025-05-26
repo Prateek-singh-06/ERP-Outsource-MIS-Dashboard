@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe, Linkedin, Mail } from "lucide-react";
+// import { Globe, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
