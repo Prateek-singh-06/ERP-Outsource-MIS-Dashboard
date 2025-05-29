@@ -17,7 +17,7 @@ export async function GET() {
   return Response.json({ views: viewCount });
 }
 
-export async function POST(request: Request) {
+export async function POST() {
   checkAndResetCounter();
   viewCount++;
   return Response.json({ views: viewCount });
