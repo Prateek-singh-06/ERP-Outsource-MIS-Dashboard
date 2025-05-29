@@ -5,9 +5,10 @@ import Loader from "@/components/Loading";
 import Nav from "@/components/nav/nav";
 import { useEffect, useState } from "react";
 import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
+import { ERP } from "@/lib/types";
 
 export default function FinancePage() {
-  const [erps, setErps] = useState<any[]>([]);
+  const [erps, setErps] = useState<ERP[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedTab, setSelectedTab] = useState<string>(() => {
     if (typeof window !== "undefined") {
