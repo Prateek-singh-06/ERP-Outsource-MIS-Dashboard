@@ -17,8 +17,8 @@ export default function ERPCard({ erp }: { erp: ERP }) {
   };
 
   return (
-    <Link href={`/erp/${erp.id}`}>
-      <div className="flex flex-col h-full space-y-6 bg-gray-50 rounded-xl shadow-md p-4 hover:shadow-lg cursor-pointer hover:bg-green-100">
+    <Link href={`/erp/${erp.id} `} className="">
+      <div className="flex flex-col h-full space-y-6 bg-gray-50 rounded-xl shadow-lg p-4 hover:shadow-lg cursor-pointer hover:bg-green-100">
         <div className="flex flex-col lg:flex-row justify-between">
           <h3 className="text-xl text-black font-semibold w-full md:w-3/5 break-words">
             {erp.name.toUpperCase()}

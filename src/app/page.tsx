@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Loader from "@/components/Loading";
 import DashboardSection from "@/components/DashboardSection";
 import FinancialDashboard from "@/components/FinancialDashboard";
+import Nav from "@/components/nav/nav";
 
 import { calculatePercentages } from "@/lib/calculatePercentages";
 import { ERP, ModuleData, SheetPercentage } from "@/lib/types";
@@ -259,8 +260,9 @@ export default function Home() {
   };
 
   return (
-    <div className="p-4 min-h-screen bg-[#f8f9fa] text-[#212529]">
-      <div className="mb-15">
+    <div className=" min-h-screen relative bg-[#f8f9fa] text-[#212529]">
+      <Nav />
+      <div className="mb-15 p-4">
         <h1
           className="text-2xl md:text-4xl font-bold mb-5 text-black cursor-pointer"
           // Toggle between "dashboard" and ERP cards view when clicking the title
