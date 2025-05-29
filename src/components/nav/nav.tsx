@@ -2,6 +2,9 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import "./nav.css";
+import ViewCount from "../ViewCount";
+import Image from 'next/image';
+
 
 const Nav: React.FC = () => {
   const [animate, setAnimate] = useState(false);
@@ -37,10 +40,19 @@ const Nav: React.FC = () => {
 
   return (
     <div
-      className="relative b-[#313131] bg-gray-300 z-[11] flex items-center justify-between p-4 "
+      className="relative b-[#313131] bg-gray-300 z-[11] flex items-center justify-between p-2 "
       ref={ref}
     >
       <div className="flex items-center w-full lg:w-auto">
+        <div className="relative w-20 h-12">
+  <Image
+    src="/image.png"
+    alt="My Photo"
+    fill // this tells Next.js to fill the parent container
+    className="" // optional: controls how the image is scaled/cropped
+  />
+</div>
+
         <Link
           href="/"
           className="text-3xl font-bold text-black ml-5 mr-auto hover:text-orange-600 transition-colors"
@@ -49,6 +61,11 @@ const Nav: React.FC = () => {
         </Link>
 
         {/* Mobile menu button */}
+        <div className="mx-12  lg:hidden">
+          <ViewCount />
+          {/* </button> */}
+          {/* </a> */}
+        </div>
         <button
           onClick={handleNavBarAnimation}
           className="lg:hidden rotate-180 text-gray-800 hover:text-orange-500 hover:cursor-pointer focus:outline-none"
@@ -103,12 +120,12 @@ const Nav: React.FC = () => {
                after:transition-transform after:duration-300
                rounded-md transition-all duration-150 hover:bg-gray-300/90"
                 >
-                  Home
+                  Dashboard Status
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/"
+                  href="/finance"
                   className="block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
                relative after:content-[''] after:absolute after:bottom-2 after:left-2
                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
@@ -116,12 +133,12 @@ const Nav: React.FC = () => {
                after:transition-transform after:duration-300
                rounded-md transition-all duration-150 hover:bg-gray-300/90"
                 >
-                  Projects
+                  Financial Status
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/"
+                  href="/contracts"
                   className="block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
                relative after:content-[''] after:absolute after:bottom-2 after:left-2
                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
@@ -129,10 +146,10 @@ const Nav: React.FC = () => {
                after:transition-transform after:duration-300
                rounded-md transition-all duration-150 hover:bg-gray-300/90"
                 >
-                  Contacts
+                  ERPs/Contracts
                 </Link>
               </li>
-              
+
               {/* <li className="mt-4">
                 <a href="/" >
                   <button className="px-5 py-2 hover:text-orange-500 font-bold border-2 border-white hover:border-orange-500 text-white bg-black rounded-md transition-colors">
@@ -172,14 +189,12 @@ const Nav: React.FC = () => {
               ERPs/Contracts
             </Link>
           </li>
-          {/* <li className="ml-12">
-            <a href="/PrateekResume.pdf" download="Resume.pdf">
-              <button className="px-8 py-2 font-bold border-2 border-orange-500 text-white bg-orange-500 rounded-md hover:bg-orange-600 hover:border-orange-600 transition-colors">
-                Resume
-              </button>
-            </a>
-          </li> */}
         </ul>
+      </div>
+      <div className="ml-auto mr-7 hidden lg:block">
+        <ViewCount />
+        {/* </button> */}
+        {/* </a> */}
       </div>
     </div>
   );

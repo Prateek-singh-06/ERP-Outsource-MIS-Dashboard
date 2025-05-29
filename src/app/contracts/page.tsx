@@ -12,7 +12,8 @@ export default function FinancePage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedTab, setSelectedTab] = useState<string>(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("selectedTab") || "pipeline";
+      localStorage.setItem("selectedTab","pipeline");
+      return "pipeline";
     }
     return "pipeline";
   });

@@ -43,7 +43,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="fixed top-4 right-4 z-50">
+        <div className="z-50">
             <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full shadow-lg px-4 py-2 border border-gray-200">
                 <div className="flex items-center justify-center">
                     <svg 
