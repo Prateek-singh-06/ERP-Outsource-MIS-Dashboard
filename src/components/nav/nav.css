@@ -1,0 +1,112 @@
+.resume {
+
+    /* background-image: linear-gradient(to right,#313131,#313131); */
+    background-image: radial-gradient(circle, #313131 30%, transparent 0%);
+    background-position: center;
+    background-size: 0% 0%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s ease-in, color 0.4s ease-in;
+}
+
+.resume:hover {
+
+    background-size: 350% 350%;
+}
+.primary-button {
+    align-items: center;
+    background-color: #ff651c;
+    border: 2px solid #ff651c;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-weight: 600;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8px 12px;
+    position: relative;
+    text-transform: uppercase;
+    transition: all .5s ease;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: var(--navbar-padding, .5rem);
+    min-height: 4rem;
+    width: 100%;
+}
+.navbar-start {
+    width: 50%;
+    justify-content: flex-start;
+}
+.navbar-center {
+    flex-shrink: 0;
+}
+.menu-horizontal {
+    display: inline-flex;
+    flex-direction: row;
+}
+.menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    padding: .5rem;
+}
+menu, ol, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.btn-ghost {
+    border-width: 1px;
+    border-color: transparent;
+    background-color: transparent;
+    color: currentColor;
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    outline-color: currentColor;
+}
+@media (prefers-reduced-motion: no-preference) {
+    .btn {
+        animation: button-pop var(--animation-btn, .25s) ease-out;
+    }
+}
+.btn {
+    display: inline-flex
+;
+    height: 3rem;
+    min-height: 3rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    user-select: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--rounded-btn, .5rem);
+    border-color: transparent;
+    border-color: oklch(var(--btn-color, var(--b2)) / var(--tw-border-opacity));
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: center;
+    font-size: .875rem;
+    line-height: 1em;
+    gap: .5rem;
+    font-weight: 600;
+    text-decoration-line: none;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(0,0,.2,1);
+    border-width: var(--border-btn, 1px);
+    transition-property: color, background-color, border-color, opacity, box-shadow, transform;
+    --tw-text-opacity: 1;
+    color: var(--fallback-bc, oklch(var(--bc) / var(--tw-text-opacity)));
+    --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
+    --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    outline-color: var(--fallback-bc, oklch(var(--bc) / 1));
+    background-color: oklch(var(--btn-color, var(--b2)) / var(--tw-bg-opacity));
+    --tw-bg-opacity: 1;
+    --tw-border-opacity: 1;
+}
