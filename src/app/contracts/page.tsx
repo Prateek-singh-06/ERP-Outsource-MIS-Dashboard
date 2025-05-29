@@ -1,6 +1,5 @@
 "use client";
 import ERPCard from "@/components/ERPCard";
-import FinancialDashboard from "@/components/FinancialDashboard";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loading";
 import Nav from "@/components/nav/nav";
