@@ -2,7 +2,7 @@
 import ERPCard from "@/components/ERPCard";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loading";
-import Nav from "@/components/nav/nav";
+// import Nav from "@/components/nav/nav";
 import { useEffect, useState } from "react";
 import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
 import { ERP } from "@/lib/types";
@@ -86,7 +86,7 @@ export default function FinancePage() {
   }
   return (
     <div className=" min-h-screen relative bg-[#f8f9fa] text-[#212529]">
-      <Nav />
+      {/* <Nav /> */}
       <div className="mb-15 p-4">
         <h1 className="text-3xl font-bold mb-4">ERPs/Contracts details</h1>
         {renderHeadingTabs()}

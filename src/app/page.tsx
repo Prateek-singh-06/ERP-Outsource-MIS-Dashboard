@@ -221,78 +221,78 @@ export default function Home() {
   const renderHeadingTabs = () => {
     // In dashboard mode, show all three statuses as .
     if (selectedTab === "dashboard") return;
-    else if (selectedTab === "financial") {
-      // In financial mode, show only onboarded and outsourcing (filter out pipeline).
-      const financialTabs = statusesForERP.filter((s) => s.key !== "pipeline");
-      return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {financialTabs.map((status) => (
-            <button
-              key={status.key}
-              className="text-lg md:text-2xl font-bold rounded p-2 bg-gray-200 text-black"
-              onClick={() => handleTabChange(status.key)}
-            >
-              {status.label}
-            </button>
-          ))}
-        </div>
-      );
-    } else {
-      // Otherwise (in ERP cards view) show clickable tabs.
-      return (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          {statusesForERP.map((status) => (
-            <button
-              key={status.key}
-              className={`text-lg md:text-2xl font-bold rounded p-2 hover:bg-blue-300 ${
-                selectedTab === status.key
-                  ? "bg-blue-400 text-white"
-                  : "bg-gray-200 text-black"
-              }`}
-              onClick={() => handleTabChange(status.key)}
-            >
-              {status.label}
-            </button>
-          ))}
-        </div>
-      );
-    }
+    // else if (selectedTab === "financial") {
+    //   // In financial mode, show only onboarded and outsourcing (filter out pipeline).
+    //   const financialTabs = statusesForERP.filter((s) => s.key !== "pipeline");
+    //   return (
+    //     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+    //       {financialTabs.map((status) => (
+    //         <button
+    //           key={status.key}
+    //           className="text-lg md:text-2xl font-bold rounded p-2 bg-gray-200 text-black"
+    //           onClick={() => handleTabChange(status.key)}
+    //         >
+    //           {status.label}
+    //         </button>
+    //       ))}
+    //     </div>
+    //   );
+    // } else {
+    //   // Otherwise (in ERP cards view) show clickable tabs.
+    //   return (
+    //     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    //       {statusesForERP.map((status) => (
+    //         <button
+    //           key={status.key}
+    //           className={`text-lg md:text-2xl font-bold rounded p-2 hover:bg-blue-300 ${
+    //             selectedTab === status.key
+    //               ? "bg-blue-400 text-white"
+    //               : "bg-gray-200 text-black"
+    //           }`}
+    //           onClick={() => handleTabChange(status.key)}
+    //         >
+    //           {status.label}
+    //         </button>
+    //       ))}
+    //     </div>
+    //   );
+    // }
   };
 
   return (
     <div className=" min-h-screen relative bg-[#f8f9fa] text-[#212529]">
-      <Nav />
-      <div className="mb-15 p-4">
-        <h1
+      {/* <Nav /> */}
+      <div className="mb-15 px-4 py-3">
+        {/* <h1
           className="text-2xl md:text-4xl font-bold mb-5 text-black cursor-pointer"
           // Toggle between "dashboard" and ERP cards view when clicking the title
-          onClick={() => {
-            if (selectedTab === "dashboard") {
-              handleTabChange("pipeline");
-            } else {
-              handleTabChange("dashboard");
-            }
-          }}
+          // onClick={() => {
+          //   if (selectedTab === "dashboard") {
+          //     handleTabChange("pipeline");
+          //   } else {
+          //     handleTabChange("dashboard");
+          //   }
+          // }}
         >
           ERP / OUTSOURCING DASHBOARD
-        </h1>
+        </h1> */}
         {/* Render Button Group */}
-        {renderButtonGroup()}
+        {/* {renderButtonGroup()} */}
 
         {/* Render Heading Tabs if in dashboard/financial or ERP cards view */}
-        {(selectedTab === "dashboard" ||
+        {/* {(selectedTab === "dashboard" ||
           selectedTab === "financial" ||
           (selectedTab !== "dashboard" && selectedTab !== "financial")) &&
-          renderHeadingTabs()}
+          renderHeadingTabs()} */}
 
         {/* Content Rendering */}
-        {selectedTab === "dashboard" ? (
+        {/* {selectedTab === "dashboard" ? ( */}
           <DashboardSection
             pipelineProgress={pipelineProgress}
             onboardedProgress={onboardedProgress}
             outsourcingProgress={outsourcingProgress}
           />
-        ) : selectedTab === "financial" ? (
+        {/* ) : selectedTab === "financial" ? (
           <FinancialDashboard />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 items-stretch">
@@ -300,7 +300,7 @@ export default function Home() {
               <ERPCard key={erp.id} erp={erp} />
             ))}
           </div>
-        )}
+        )} */}
       </div>
       <Footer />
     </div>
