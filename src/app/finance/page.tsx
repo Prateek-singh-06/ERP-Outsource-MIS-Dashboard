@@ -1,6 +1,5 @@
 import FinancialDashboard from "@/components/FinancialDashboard";
 import Footer from "@/components/Footer";
-import Nav from "@/components/nav/nav";
 
 export default function FinancePage() {
   const statusesForERP = [
@@ -31,7 +30,6 @@ export default function FinancePage() {
   };
   return (
     <div className=" min-h-screen relative bg-[#f8f9fa] text-[#212529]">
-      <Nav />
       <div className="mb-15 p-4">
         <h1 className="text-3xl font-bold mb-4">Live Financial status</h1>
         {renderHeadingTabs()}

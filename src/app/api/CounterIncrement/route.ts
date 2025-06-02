@@ -1,4 +1,4 @@
-let viewCount = 0;
+let viewCount = 3;
 let lastResetDate = new Date().getDate(); // Store the current day of the month
 
 function checkAndResetCounter() {
@@ -7,7 +7,7 @@ function checkAndResetCounter() {
   
   // If the day has changed and it's past midnight, reset the counter
   if (currentDate !== lastResetDate && now.getHours() >= 0) {
-    viewCount = 0;
+    viewCount = 3;
     lastResetDate = currentDate;
   }
 }

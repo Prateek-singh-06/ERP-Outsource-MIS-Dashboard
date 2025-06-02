@@ -4,11 +4,13 @@ import Link from "next/link";
 import "./nav.css";
 import ViewCount from "../ViewCount";
 import Image from 'next/image';
+import { usePathname } from "next/navigation";
 
 
 const Nav: React.FC = () => {
   const [animate, setAnimate] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+  const pathname = usePathname();
 
   const handleNavBarAnimation = () => {
     setAnimate(!animate);
@@ -18,6 +20,12 @@ const Nav: React.FC = () => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
       setAnimate(false);
     }
+  };
+  const isActive = (href: string) => {
+    // For root path, match exactly
+    if (href === "/") return pathname === "/";
+    // For other paths, match if pathname starts with href
+    return pathname.startsWith(href);
   };
 
   useEffect(() => {
@@ -57,7 +65,6 @@ const Nav: React.FC = () => {
           href="/"
           className="text-3xl font-bold text-black ml-5 mr-auto hover:text-orange-600 transition-colors"
         >
-          DASHBOARD
         </Link>
 
         {/* Mobile menu button */}
@@ -113,12 +120,16 @@ const Nav: React.FC = () => {
               <li>
                 <Link
                   href="/"
-                  className="block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
+                  className={`block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
                relative after:content-[''] after:absolute after:bottom-2 after:left-2
                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
                after:scale-x-0 hover:after:scale-x-100 after:origin-left
                after:transition-transform after:duration-300
-               rounded-md transition-all duration-150 hover:bg-gray-300/90"
+               rounded-md transition-all duration-150 hover:bg-gray-300/90 ${
+                  isActive("/")
+                    ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                }`}
                 >
                   Dashboard Status
                 </Link>
@@ -126,12 +137,16 @@ const Nav: React.FC = () => {
               <li>
                 <Link
                   href="/finance"
-                  className="block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
+                  className={`block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
                relative after:content-[''] after:absolute after:bottom-2 after:left-2
                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
                after:scale-x-0 hover:after:scale-x-100 after:origin-left
                after:transition-transform after:duration-300
-               rounded-md transition-all duration-150 hover:bg-gray-300/90"
+               rounded-md transition-all duration-150 hover:bg-gray-300/90 ${
+                  isActive("/finance")
+                    ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                }`}
                 >
                   Financial Status
                 </Link>
@@ -139,24 +154,38 @@ const Nav: React.FC = () => {
               <li>
                 <Link
                   href="/contracts"
-                  className="block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
+                  className={`block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
                relative after:content-[''] after:absolute after:bottom-2 after:left-2
                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
                after:scale-x-0 hover:after:scale-x-100 after:origin-left
                after:transition-transform after:duration-300
-               rounded-md transition-all duration-150 hover:bg-gray-300/90"
+               rounded-md transition-all duration-150 hover:bg-gray-300/90 ${
+                  isActive("/contracts")
+                    ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                }`}
                 >
                   ERPs/Contracts
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/rego"
+                  className={`block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
+               relative after:content-[''] after:absolute after:bottom-2 after:left-2
+               after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
+               after:scale-x-0 hover:after:scale-x-100 after:origin-left
+               after:transition-transform after:duration-300
+               rounded-md transition-all duration-150 hover:bg-gray-300/90 ${
+                  isActive("/contracts")
+                    ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                }`}
+                >
+                  Rego
+                </Link>
+              </li>
 
-              {/* <li className="mt-4">
-                <a href="/" >
-                  <button className="px-5 py-2 hover:text-orange-500 font-bold border-2 border-white hover:border-orange-500 text-white bg-black rounded-md transition-colors">
-                    Resume
-                  </button>
-                </a>
-              </li> */}
             </ul>
           </div>
         </div>
@@ -168,7 +197,15 @@ const Nav: React.FC = () => {
           <li>
             <Link
               href="/"
-              className="font-semibold text-lg text-gray-900 hover:text-orange-500 px-3 py-2 rounded-md transition-colors"
+              className={`font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
+                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
+                after:transition-transform after:duration-300
+                ${
+                  isActive("/")
+                    ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                }
+              `}
             >
               Dashboard Status
             </Link>
@@ -176,7 +213,15 @@ const Nav: React.FC = () => {
           <li>
             <Link
               href="/finance"
-              className="font-semibold text-lg text-gray-900 hover:text-orange-500 px-3 py-2 rounded-md transition-colors"
+              className={`font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
+                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
+                after:transition-transform after:duration-300
+                ${
+                  isActive("/finance")
+                    ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                }
+              `}
             >
               Financial Status
             </Link>
@@ -184,14 +229,38 @@ const Nav: React.FC = () => {
           <li>
             <Link
               href="/contracts"
-              className="font-semibold text-lg text-gray-900 hover:text-orange-500 px-3 py-2 rounded-md transition-colors"
+              className={`font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
+                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
+                after:transition-transform after:duration-300
+                ${
+                  isActive("/contracts")
+                    ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                }
+              `}
             >
               ERPs/Contracts
             </Link>
           </li>
+          <li>
+            <Link
+              href="/rego-development"
+              className={` font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
+                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
+                after:transition-transform after:duration-300
+                ${
+                  isActive("/rego")
+                    ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                }
+              `}
+            >
+              Rego
+            </Link>
+          </li>
         </ul>
       </div>
-      <div className="ml-auto mr-7 hidden lg:block">
+      <div className=" mr-7 hidden lg:block">
         <ViewCount />
         {/* </button> */}
         {/* </a> */}
