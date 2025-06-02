@@ -65,7 +65,6 @@ const Nav: React.FC = () => {
           href="/"
           className="text-3xl font-bold text-black ml-5 mr-auto hover:text-orange-600 transition-colors"
         >
-          DASHBOARD
         </Link>
 
         {/* Mobile menu button */}
@@ -204,7 +203,7 @@ const Nav: React.FC = () => {
                 ${
                   isActive("/")
                     ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
-                    : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                 }
               `}
             >
@@ -220,7 +219,7 @@ const Nav: React.FC = () => {
                 ${
                   isActive("/finance")
                     ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
-                    : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                 }
               `}
             >
@@ -230,13 +229,13 @@ const Nav: React.FC = () => {
           <li>
             <Link
               href="/contracts"
-              className={`text-gray-900 font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
+              className={`font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
                 after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
                 after:transition-transform after:duration-300
                 ${
                   isActive("/contracts")
                     ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
-                    : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                 }
               `}
             >
@@ -246,13 +245,13 @@ const Nav: React.FC = () => {
           <li>
             <Link
               href="/rego-development"
-              className={`text-gray-900 font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
+              className={` font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
                 after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
                 after:transition-transform after:duration-300
                 ${
                   isActive("/rego")
                     ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
-                    : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
+                    : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                 }
               `}
             >
@@ -261,7 +260,7 @@ const Nav: React.FC = () => {
           </li>
         </ul>
       </div>
-      <div className="ml-auto mr-7 hidden lg:block">
+      <div className=" mr-7 hidden lg:block">
         <ViewCount />
         {/* </button> */}
         {/* </a> */}
