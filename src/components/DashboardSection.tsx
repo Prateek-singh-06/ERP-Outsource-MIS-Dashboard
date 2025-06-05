@@ -65,15 +65,9 @@ export default function DashboardSection({
     <div className="mt-1.5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {/* Meetings */}
       <h1
-          className="text-2xl md:text-4xl font-bold mb-5 text-black cursor-pointer"
-          // Toggle between "dashboard" and ERP cards view when clicking the title
-          // onClick={() => {
-          //   if (selectedTab === "dashboard") {
-          //     handleTabChange("pipeline");
-          //   } else {
-          //     handleTabChange("dashboard");
-          //   }
-          // }}
+          className="text-2xl md:text-4xl font-bold mb-5 text-black"
+
+          
         >
           ERP / OUTSOURCING DASHBOARD
         </h1>
