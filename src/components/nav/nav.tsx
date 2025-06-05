@@ -131,7 +131,7 @@ const Nav: React.FC = () => {
                     : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                 }`}
                 >
-                  Dashboard Status
+                  Dashboard
                 </Link>
               </li>
               <li>
@@ -165,24 +165,24 @@ const Nav: React.FC = () => {
                     : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                 }`}
                 >
-                  ERPs/Contracts
+                  Patners
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/rego"
+                  href="/safety"
                   className={`block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
                relative after:content-[''] after:absolute after:bottom-2 after:left-2
                after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
                after:scale-x-0 hover:after:scale-x-100 after:origin-left
                after:transition-transform after:duration-300
                rounded-md transition-all duration-150 hover:bg-gray-300/90 ${
-                  isActive("/contracts")
+                  isActive("/safety")
                     ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                     : "text-gray-900 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                 }`}
                 >
-                  Rego
+                  Safety
                 </Link>
               </li>
 
@@ -207,7 +207,7 @@ const Nav: React.FC = () => {
                 }
               `}
             >
-              Dashboard Status
+              Dashboard
             </Link>
           </li>
           <li>
@@ -239,23 +239,23 @@ const Nav: React.FC = () => {
                 }
               `}
             >
-              ERPs/Contracts
+              Partners
             </Link>
           </li>
           <li>
             <Link
-              href="/rego-development"
+              href="/safety"
               className={` font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
                 after:w-[calc(100%-1rem)] after:h-0.5 after:bg-orange-500
                 after:transition-transform after:duration-300
                 ${
-                  isActive("/rego")
+                  isActive("/safety")
                     ? "text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                     : "text-blue-700 hover:text-orange-500 after:scale-x-0 hover:after:scale-x-100"
                 }
               `}
             >
-              Rego
+              Safety
             </Link>
           </li>
         </ul>
