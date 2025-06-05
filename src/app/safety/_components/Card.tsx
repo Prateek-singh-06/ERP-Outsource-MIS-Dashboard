@@ -49,6 +49,20 @@ export const DataCard: React.FC<DataCardProps> = ({
     yellow: 'bg-yellow-100 dark:bg-yellow-900/30',
     purple: 'bg-purple-100 dark:bg-purple-900/30'
   };
+  const gradientFromColors = {
+  blue: "from-blue-100",
+  green: "from-green-100",
+  red: "from-red-100",
+  yellow: "from-yellow-100",
+  purple: "from-purple-100",
+};
+const gradientToColors = {
+  blue: "to-blue-500",
+  green: "to-green-500",
+  red: "to-red-500",
+  yellow: "to-yellow-500",
+  purple: "to-purple-500",
+};
 
   const selectedColor =(progress?.color || "blue");
 
@@ -139,8 +153,15 @@ export const DataCard: React.FC<DataCardProps> = ({
       {/* bg-gradient-to-r from-${hoverEffect}-500 to-${hoverEffect}-500 */}
 
       {/* Animated border bottom - positioned outside content container */}
+      <div
+  className={cn(
+    "absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r transition-all duration-500 group-hover:w-full",
+    gradientFromColors[hoverEffect || "blue"],
+    gradientToColors[hoverEffect || "blue"]
+  )}
+/>
 
-      <div className={`absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-${hoverEffect}-100 to-${hoverEffect}-500 transition-all duration-500  group-hover:w-full `}/>
+      {/* <div className={`absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-${hoverEffect}-100 to-${hoverEffect}-500 transition-all duration-500  group-hover:w-full `}/> */}
     </div>
   );
 };
