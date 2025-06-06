@@ -2,13 +2,14 @@
 import { DataCard } from "./_components/Card";
 import { AgingCard } from "./_components/Agingcard";
 import { ChartBarLabel } from "./_components/barChart";
+import Link from "next/link";
 
 export default function SafteyPage() {
   const summary = {
     totalObservations: 1352,
-    totalOpen: 445,
-    closedPercent: 67,
-    avgAgeofclosed: 2,
+    totalOpen: 393,
+    closedPercent: 73,
+    avgAgeofclosed: 3,
     avgAgeofopen: 15,
   };
 
@@ -93,6 +94,7 @@ export default function SafteyPage() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Total Observations Card - Eye/View Icon */}
+        {/* <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full"> */}
         <DataCard
           title="Total Observations"
           value={summary.totalObservations}
@@ -121,8 +123,10 @@ export default function SafteyPage() {
           hoverEffect="blue"
           className="bg-white hover:bg-blue-50 focus:ring-blue-500"
         />
+        {/* </Link> */}
 
         {/* Open Issues Card - Alert/Warning Icon */}
+         {/* <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full"> */}
         <DataCard
           title="Open Issues"
           value={summary.totalOpen}
@@ -156,6 +160,7 @@ export default function SafteyPage() {
           className="bg-white hover:bg-red-50 focus:ring-red-500"
           
         />
+        {/* </Link> */}
 
         {/* Closed Issues Card - Check/Success Icon */}
         <DataCard
