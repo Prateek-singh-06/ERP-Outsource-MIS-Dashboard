@@ -21,10 +21,10 @@ import {
 export const description = "A bar chart with a label"
 
 const chartData = [
-  { month: "LOW", desktop: 57 },
-  { month: "MEDIUM", desktop: 148 },
-  { month: "HIGH", desktop: 186 },
-  { month: "NO SEVERITY", desktop: 54 },
+  { month: "LOW", desktop: 39 },
+  { month: "MEDIUM", desktop: 125 },
+  { month: "HIGH", desktop: 154 },
+  { month: "NO SEVERITY", desktop: 45 },
 ]
 
 const chartConfig = {
@@ -75,7 +75,7 @@ export function ChartBarLabel() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          Total 445 open issues <TrendingUp className="h-4 w-4 text-red-400" />
+          Total 363 open issues <TrendingUp className="h-4 w-4 text-red-400" />
         </div>
         {/* <div className="text-muted-foreground leading-none">
           total 445 open issues
