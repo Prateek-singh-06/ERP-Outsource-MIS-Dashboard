@@ -2,7 +2,7 @@
 import { DataCard } from "./_components/Card";
 import { AgingCard } from "./_components/Agingcard";
 import { ChartBarLabel } from "./_components/barChart";
-import Link from "next/link";
+// import Link from "next/link";
 
 export default function SafteyPage() {
   const summary = {
