@@ -6,7 +6,7 @@ export default function BackToHomeButton() {
   const router = useRouter();
 
   const handleBackToHome = () => {
-    router.push("/");
+    router.back();
   };
 
   return (
@@ -27,7 +27,7 @@ export default function BackToHomeButton() {
         transition
       "
     >
-      Back to Home
+      Back
     </button>
   );
 }
