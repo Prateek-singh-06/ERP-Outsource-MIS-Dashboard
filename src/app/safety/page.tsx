@@ -2,15 +2,16 @@
 import { DataCard } from "./_components/Card";
 import { AgingCard } from "./_components/Agingcard";
 import { ChartBarLabel } from "./_components/barChart";
+import SafetyBarChart from "./_components/safteyBarChart";
 // import Link from "next/link";
 
 export default function SafteyPage() {
   const summary = {
     totalObservations: 1352,
-    totalOpen: 393,
+    totalOpen: 363,
     closedPercent: 73,
     avgAgeofclosed: 3,
-    avgAgeofopen: 15,
+    avgAgeofopen: 16,
   };
 
   // const plants = [
@@ -89,10 +90,10 @@ export default function SafteyPage() {
   return (
     <div className="mt-0 max-w-7xl min-h-screen mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {/* Meetings */}
-      <h1 className="text-xl md:text-2xl pt-6 font-bold mb-5 text-black">
+      <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black">
         SAFETY OBSERVATION DASHBOARD
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-0">
         {/* Total Observations Card - Eye/View Icon */}
         {/* <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full"> */}
         <DataCard
@@ -126,7 +127,7 @@ export default function SafteyPage() {
         {/* </Link> */}
 
         {/* Open Issues Card - Alert/Warning Icon */}
-         {/* <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full"> */}
+        {/* <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full"> */}
         <DataCard
           title="Open Issues"
           value={summary.totalOpen}
@@ -147,18 +148,22 @@ export default function SafteyPage() {
             </svg>
           }
           progress={{
-            value: Math.floor((summary.totalOpen * 100) / summary.totalObservations) || 0,
+            value:
+              Math.floor(
+                (summary.totalOpen * 100) / summary.totalObservations
+              ) || 0,
             max: 100,
             label: "OPEN %",
             color: "red",
           }}
           trend={{
-            value: Math.floor((summary.totalOpen * 100) / summary.totalObservations),
+            value: Math.floor(
+              (summary.totalOpen * 100) / summary.totalObservations
+            ),
             isPositive: false,
           }}
           hoverEffect="red"
           className="bg-white hover:bg-red-50 focus:ring-red-500"
-          
         />
         {/* </Link> */}
 
@@ -217,7 +222,14 @@ export default function SafteyPage() {
           className="bg-white hover:bg-purple-50 focus:ring-purple-500 cursor-pointer"
         />
       </div>
-      <ChartBarLabel/>
+      <div className="flex lg:flex-row flex-col gap-6 mt-6">
+        <div className="lg:w-[40%] w-full">
+          <ChartBarLabel />
+        </div>
+        <div className="lg:w-[60%] w-full lg:h-auto h-[400px]  rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-gray-200/50 hover:-translate-y-1 lg:mb-0 mb-10">
+          <SafetyBarChart />
+        </div>
+      </div>
     </div>
   );
 }

@@ -10,6 +10,7 @@ export async function GET(
   const { id } = await params;
 
   const erps = await fetchGoogleSheetData();
+  // console.log("Fetched ERPs:", erps);
   const erp = erps.find((e) => e.id === parseInt(id));
 
   if (!erp) {

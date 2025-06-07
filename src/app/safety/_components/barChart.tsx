@@ -36,7 +36,7 @@ const chartConfig = {
 
 export function ChartBarLabel() {
   return (
-    <Card className="w-[40%]">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Severity Level wise Open issues</CardTitle>
         <CardDescription>Till June 3</CardDescription>
@@ -47,8 +47,10 @@ export function ChartBarLabel() {
             accessibilityLayer
             data={chartData}
             margin={{
-              top: 20,
+              top: 10,
             }}
+            barCategoryGap={20}
+            barSize={80}
           >
             <CartesianGrid vertical={false} />
             <XAxis
@@ -57,17 +59,27 @@ export function ChartBarLabel() {
               tickMargin={10}
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
+              // width={50}
+              // height={50}
+              // type="category"
+              // interval={0}
+              // allowDuplicatedCategory={false}
+
+
+
+              
             />
             <ChartTooltip
-              cursor={false}
+              cursor={true}
               content={<ChartTooltipContent hideLabel />}
             />
             <Bar dataKey="desktop" fill="blue" radius={8}>
               <LabelList
                 position="top"
-                offset={12}
+                offset={7}
                 className="fill-foreground"
                 fontSize={12}
+                // width={50}
               />
             </Bar>
           </BarChart>

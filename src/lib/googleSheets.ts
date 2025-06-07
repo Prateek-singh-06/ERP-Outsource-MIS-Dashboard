@@ -29,10 +29,21 @@ export async function fetchGoogleSheetData(): Promise<ERP[]> {
     skipEmptyLines: true,
     dynamicTyping: true,
   });
+  let lastName = "";
+  const filledData = data.map((row) => {
+    if (row.name && row.name.trim().length > 0) {
+      lastName = row.name.trim();
+      return { ...row, name: lastName };
+    } else {
+      return { ...row, name: lastName };
+    }
+  });
 
-  const filteredData = data.filter(
-    (row) => row.name && row.name.trim().length > 0
+  const filteredData = filledData.filter(
+    (row) => row.companies && row.companies.trim().length > 0
   );
+
+
 
   return filteredData.map((row, index) => ({
     id: index + 1,
