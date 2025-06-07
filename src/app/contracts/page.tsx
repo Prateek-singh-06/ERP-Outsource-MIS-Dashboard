@@ -8,7 +8,8 @@ import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
 import { ERP } from "@/lib/types";
 
 export default function FinancePage() {
-  const [erps, setErps] = useState<ERP[]>([]);
+  const [erps, setErps] = useState<ERP[][]>([]);
+  const [expandedGroup, setExpandedGroup] = useState<number | null>();
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedTab, setSelectedTab] = useState<string>(() => {
     if (typeof window !== "undefined") {
@@ -20,15 +21,16 @@ export default function FinancePage() {
 
   const filterData = (status: string) => {
     if (status === "pipeline") {
-      return erps.filter((erp) => erp.status === "In Pipeline");
+      return erps.filter((erp) => erp[0].status === "In Pipeline");
     } else if (status === "onboarded") {
-      return erps.filter((erp) => erp.status === "Onboarded");
+      return erps.filter((erp) => erp[0].status === "Onboarded");
     } else if (status === "outsourcing") {
-      return erps.filter((erp) => erp.status === "Outsourcing Contract");
+      return erps.filter((erp) => erp[0].status === "Outsourcing Contract");
     }
     return [];
   };
   const handleTabChange = (newTab: string) => {
+    setExpandedGroup(null);
     setSelectedTab(newTab);
     if (typeof window !== "undefined") {
       localStorage.setItem("selectedTab", newTab);
@@ -62,6 +64,16 @@ export default function FinancePage() {
         </div>
       );
   };
+  function groupByName(erps: ERP[]): ERP[][] {
+  const map = new Map<string, ERP[]>();
+  erps.forEach((erp) => {
+    if (!map.has(erp.name)) {
+      map.set(erp.name, []);
+    }
+    map.get(erp.name)!.push(erp);
+  });
+  return Array.from(map.values());
+}
   useEffect(() => {
     async function loadERPData() {
       try {
@@ -69,11 +81,14 @@ export default function FinancePage() {
         const res = await fetch(`${baseUrl}/api/erps`, { cache: "no-store" });
         if (!res.ok) throw new Error("Failed to fetch ERP Data");
         const data = await res.json();
-        setErps(data);
+        const groupedData = groupByName(data);
+        setErps(groupedData);
+         setExpandedGroup(null);
       } catch (error) {
         console.error("Error fetching ERP data:", error);
       } finally {
         setLoading(false);
+       
       }
     }
     loadERPData();
@@ -90,10 +105,12 @@ export default function FinancePage() {
       <div className="mb-15 p-4">
         <h1 className="text-3xl font-bold mb-4">ERPs/Contracts details</h1>
         {renderHeadingTabs()}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 items-stretch">
+        <div className={`${expandedGroup===null?"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 items-stretch":"w-full"}`}>
           {filterData(selectedTab).map((erp) => (
-            <ERPCard key={erp.id} erp={erp} />
-          ))}
+  <ERPCard key={erp[0].id} erp={erp} expanded={expandedGroup===erp[0].id||expandedGroup===null} onExpand={() =>
+      setExpandedGroup(expandedGroup === erp[0].id ? null : erp[0].id) 
+    } expandedGroup={expandedGroup} />
+))}
         </div>
       </div>
       <Footer />

@@ -52,7 +52,7 @@ const Nav: React.FC = () => {
       ref={ref}
     >
       <div className="flex items-center w-full lg:w-auto">
-        <div className="relative w-20 h-12">
+        <div className="relative w-26 h-15">
   <Image
     src="/image.png"
     alt="My Photo"
