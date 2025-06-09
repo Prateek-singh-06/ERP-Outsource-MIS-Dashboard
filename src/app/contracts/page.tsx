@@ -75,7 +75,9 @@ export default function FinancePage() {
   return Array.from(map.values());
 }
   useEffect(() => {
+     setExpandedGroup(null);
     async function loadERPData() {
+      
       try {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL;
         const res = await fetch(`${baseUrl}/api/erps`, { cache: "no-store" });
@@ -83,7 +85,7 @@ export default function FinancePage() {
         const data = await res.json();
         const groupedData = groupByName(data);
         setErps(groupedData);
-         setExpandedGroup(null);
+        
       } catch (error) {
         console.error("Error fetching ERP data:", error);
       } finally {
