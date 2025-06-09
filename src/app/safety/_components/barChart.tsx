@@ -21,10 +21,10 @@ import {
 export const description = "A bar chart with a label"
 
 const chartData = [
-  { month: "LOW", desktop: 39 },
-  { month: "MEDIUM", desktop: 125 },
-  { month: "HIGH", desktop: 154 },
-  { month: "NO SEVERITY", desktop: 45 },
+  { month: "LOW", desktop: 53 },
+  { month: "MEDIUM", desktop: 143 },
+  { month: "HIGH", desktop: 163 },
+  { month: "NO SEVERITY", desktop: 48 },
 ]
 
 const chartConfig = {
