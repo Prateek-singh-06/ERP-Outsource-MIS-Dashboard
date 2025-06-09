@@ -226,7 +226,7 @@ export default function SafteyPage() {
         <div className="lg:w-[40%] w-full">
           <ChartBarLabel />
         </div>
-        <div className="lg:w-[60%] w-full lg:h-auto h-[400px]  rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-gray-200/50 hover:-translate-y-1 lg:mb-0 mb-10">
+        <div className="lg:w-[60%] w-full lg:h-auto h-[400px]  rounded-xl border border-gray-200 bg-white shadow-sm lg:mb-0 mb-10">
           <SafetyBarChart />
         </div>
       </div>
