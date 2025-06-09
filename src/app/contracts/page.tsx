@@ -11,13 +11,25 @@ export default function FinancePage() {
   const [erps, setErps] = useState<ERP[][]>([]);
   const [expandedGroup, setExpandedGroup] = useState<number | null>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedTab, setSelectedTab] = useState<string>(() => {
+  const [selectedTab, setSelectedTab] = useState<string>("pipeline");
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("selectedTab","pipeline");
-      return "pipeline";
+      const storedTab = localStorage.getItem("selectedTab");
+      if (storedTab) {
+        setSelectedTab(storedTab);
+      } else {
+        localStorage.setItem("selectedTab", "pipeline");
+      }
+    }else{
+      const storedTab = localStorage.getItem("selectedTab");
+      if (storedTab) {
+        setSelectedTab(storedTab);
+      } else {
+        localStorage.setItem("selectedTab", "pipeline");
+      }
     }
-    return "pipeline";
-  });
+  }, []);
 
   const filterData = (status: string) => {
     if (status === "pipeline") {
