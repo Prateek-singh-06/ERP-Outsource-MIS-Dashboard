@@ -3,6 +3,7 @@ import { DataCard } from "./_components/Card";
 import { AgingCard } from "./_components/Agingcard";
 import { ChartBarLabel } from "./_components/barChart";
 import SafetyBarChart from "./_components/safteyBarChart";
+import Link from "next/link";
 // import Link from "next/link";
 
 export default function SafteyPage() {
@@ -95,7 +96,7 @@ export default function SafteyPage() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-0">
         {/* Total Observations Card - Eye/View Icon */}
-        {/* <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full"> */}
+        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full">
         <DataCard
           title="Total Observations"
           value={summary.totalObservations}
@@ -124,10 +125,10 @@ export default function SafteyPage() {
           hoverEffect="blue"
           className="bg-white hover:bg-blue-50 focus:ring-blue-500"
         />
-        {/* </Link> */}
+        </Link>
 
         {/* Open Issues Card - Alert/Warning Icon */}
-        {/* <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full"> */}
+        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full">
         <DataCard
           title="Open Issues"
           value={summary.totalOpen}
@@ -165,9 +166,9 @@ export default function SafteyPage() {
           hoverEffect="red"
           className="bg-white hover:bg-red-50 focus:ring-red-500"
         />
-        {/* </Link> */}
-
+        </Link>
         {/* Closed Issues Card - Check/Success Icon */}
+        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full">
         <DataCard
           title="Closed Issues"
           value={summary.totalObservations - summary.totalOpen}
@@ -197,8 +198,10 @@ export default function SafteyPage() {
           hoverEffect="green"
           className="bg-white hover:bg-green-50 focus:ring-green-500"
         />
+        </Link>
 
         {/* Aging Card - Clock/Time Icon */}
+        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full">
         <AgingCard
           title="Average Age of Issues"
           subtitle="Days"
@@ -221,6 +224,7 @@ export default function SafteyPage() {
           }
           className="bg-white hover:bg-purple-50 focus:ring-purple-500 cursor-pointer"
         />
+        </Link>
       </div>
       <div className="flex lg:flex-row flex-col gap-6 mt-6">
         <div className="lg:w-[40%] w-full">
