@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 interface DataCardProps {
   title: string;
-  value: string | number;
+  value?: string | number;
   subtitle?: string;
   icon?: React.ReactNode;
   trend?: {

@@ -75,3 +75,34 @@ export interface ModuleData {
   tasksCompleted: number;
   url: string;
 }
+export interface SafetySummary {
+  totalObservations: number;
+  totalOpen: number;
+  closedPercent: number;
+  avgAgeofclosed: number;
+  avgAgeofopen: number;
+}
+export interface Plant {
+  plant: string;
+  Open: number;
+  Closed: number;
+  Low: number;
+  Medium: number;
+  High: number;
+  NoSeverity: number;
+  Total: number;
+}
+export interface SeverityLevelWise{
+  LOW:number;
+  MEDIUM:number;
+  HIGH:number;
+  "NO SEVERITY":number;
+}
+export interface Safety{
+  Summary:SafetySummary;
+  Plant:Plant[];
+  SeverityLevelWise:SeverityLevelWise;
+}
+
+
+

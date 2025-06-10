@@ -28,7 +28,7 @@ export const AgingCard: React.FC<AgingCardProps> = ({
     <div
       className={cn(
         "group relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:shadow-gray-200/50 hover:-translate-y-1",
-        "dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-gray-900/20",
+        "dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-gray-900/20 h-full",
         className
       )}
     >

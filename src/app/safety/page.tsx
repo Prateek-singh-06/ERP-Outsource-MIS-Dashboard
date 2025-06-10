@@ -4,91 +4,40 @@ import { AgingCard } from "./_components/Agingcard";
 import { ChartBarLabel } from "./_components/barChart";
 import SafetyBarChart from "./_components/safteyBarChart";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import SafteyData from "@/data/saftey.json"
+import { Safety } from "@/lib/types";
+import Loading from "@/components/Loading";
+import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
 // import Link from "next/link";
 
-export default function SafteyPage() {
-  const summary = {
-    totalObservations: 1526,
-    totalOpen: 440,
-    closedPercent: 71,
-    avgAgeofclosed: 3,
-    avgAgeofopen: 16,
-  };
+export default function SafetyPage() {
+  const [safety,setSafety]=useState<Safety|null>(null);
 
-  // const plants = [
-  //   {
-  //     plant: "Bio Mass",
-  //     open: 31,
-  //     closed: 103,
-  //     low: 10,
-  //     medium: 6,
-  //     high: 9,
-  //     noSeverity: 6,
-  //     total: 134,
-  //   },
-  //   {
-  //     plant: "ISP",
-  //     open: 107,
-  //     closed: 281,
-  //     low: 15,
-  //     medium: 57,
-  //     high: 30,
-  //     noSeverity: 5,
-  //     total: 388,
-  //   },
-  //   {
-  //     plant: "New DIP",
-  //     open: 25,
-  //     closed: 135,
-  //     low: 15,
-  //     medium: 30,
-  //     high: 10,
-  //     noSeverity: 6,
-  //     total: 388,
-  //   },
-  //   {
-  //     plant: "RML 1",
-  //     open: 140,
-  //     closed: 107,
-  //     low: 22,
-  //     medium: 38,
-  //     high: 55,
-  //     noSeverity: 32,
-  //     total: 247,
-  //   },
-  //   {
-  //     plant: "Oxygen Plant",
-  //     open: 24,
-  //     closed: 72,
-  //     low: 22,
-  //     medium: 5,
-  //     high: 17,
-  //     noSeverity: 1,
-  //     total: 247,
-  //   },
-  //   {
-  //     plant: "Power Plant",
-  //     open: 26,
-  //     closed: 99,
-  //     low: 26,
-  //     medium: 16,
-  //     high: 28,
-  //     noSeverity: 8,
-  //     total: 125,
-  //   },
-  //   {
-  //     plant: "Seamless",
-  //     open: 54,
-  //     closed: 83,
-  //     low: 33,
-  //     medium: 16,
-  //     high: 28,
-  //     noSeverity: 9,
-  //     total: 137,
-  //   },
-  // ];
+  useEffect(()=>{
+    async function fetchTheData (){
+      try{
+        const response = await fetch(`/api/Saftey?param1=${encodeURIComponent(SafteyData[0].gid)}`);
+        if(!response){
+          throw new Error("failed to fetch the data")
+        }
+        const data=await response.json();
+        setSafety(data);
+        // console.log(data);
+      }catch(error){
+        console.log("Error",error);
+      }
+    }
+    
+    fetchTheData();
+    const interval = setInterval(fetchTheData, DATA_REFRESH_INTERVAL); // fetch every 20 seconds
 
-  return (
+    return () => clearInterval(interval); // cleanup on unmount
+  },[])
+
+  
+  return (<>
+  {safety?(
     <div className="mt-0 max-w-7xl min-h-screen mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
       {/* Meetings */}
       <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black">
@@ -96,10 +45,10 @@ export default function SafteyPage() {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-0">
         {/* Total Observations Card - Eye/View Icon */}
-        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full">
+        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full" target="_blank">
         <DataCard
           title="Total Observations"
-          value={summary.totalObservations}
+          value={safety.Summary.totalObservations}
           subtitle="All time observations"
           icon={
             <svg
@@ -128,10 +77,10 @@ export default function SafteyPage() {
         </Link>
 
         {/* Open Issues Card - Alert/Warning Icon */}
-        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full">
+        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full " target="_blank">
         <DataCard
           title="Open Issues"
-          value={summary.totalOpen}
+          value={safety.Summary.totalOpen}
           subtitle="Requires attention"
           icon={
             <svg
@@ -151,7 +100,7 @@ export default function SafteyPage() {
           progress={{
             value:
               Math.floor(
-                (summary.totalOpen * 100) / summary.totalObservations
+                (safety.Summary.totalOpen * 100) / safety.Summary.totalObservations
               ) || 0,
             max: 100,
             label: "OPEN %",
@@ -159,7 +108,7 @@ export default function SafteyPage() {
           }}
           trend={{
             value: Math.floor(
-              (summary.totalOpen * 100) / summary.totalObservations
+              (safety.Summary.totalOpen * 100) / safety.Summary.totalObservations
             ),
             isPositive: false,
           }}
@@ -168,10 +117,10 @@ export default function SafteyPage() {
         />
         </Link>
         {/* Closed Issues Card - Check/Success Icon */}
-        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full">
+        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full" target="_blank">
         <DataCard
           title="Closed Issues"
-          value={summary.totalObservations - summary.totalOpen}
+          value={safety.Summary.totalObservations - safety.Summary.totalOpen}
           subtitle="Resolved issues"
           icon={
             <svg
@@ -189,24 +138,28 @@ export default function SafteyPage() {
             </svg>
           }
           progress={{
-            value: summary.closedPercent,
+            value: Math.floor(
+                ((safety.Summary.totalObservations-safety.Summary.totalOpen) * 100) / safety.Summary.totalObservations
+              ) || 0,
             max: 100,
             label: "CLOSED %",
             color: "green",
           }}
-          trend={{ value: summary.closedPercent, isPositive: true }}
+          trend={{ value: Math.floor(
+                ((safety.Summary.totalObservations-safety.Summary.totalOpen) * 100) / safety.Summary.totalObservations
+              ) || 0, isPositive: true }}
           hoverEffect="green"
           className="bg-white hover:bg-green-50 focus:ring-green-500"
         />
         </Link>
 
         {/* Aging Card - Clock/Time Icon */}
-        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full">
+        <Link href="https://docs.google.com/spreadsheets/d/1Geh-U247eGXRAAtrXbA9G1HidrX9Hzlj3i1hnb4jRCc/edit?gid=1258674082#gid=1258674082" className="no-underline h-full" target="_blank">
         <AgingCard
           title="Average Age of Issues"
           subtitle="Days"
-          closedAge={{ label: "Closed Issues", value: summary.avgAgeofclosed }}
-          openAge={{ label: "Open Issues", value: summary.avgAgeofopen }}
+          closedAge={{ label: "Closed Issues", value: safety.Summary.avgAgeofclosed }}
+          openAge={{ label: "Open Issues", value: safety.Summary.avgAgeofopen }}
           icon={
             <svg
               className="h-5 w-5"
@@ -228,12 +181,15 @@ export default function SafteyPage() {
       </div>
       <div className="flex lg:flex-row flex-col gap-6 mt-6">
         <div className="lg:w-[40%] w-full">
-          <ChartBarLabel />
+          <ChartBarLabel SeverityLevel={safety.SeverityLevelWise} totalopen={safety.Summary.totalOpen} />
         </div>
         <div className="lg:w-[60%] w-full lg:h-auto h-[400px]  rounded-xl border border-gray-200 bg-white shadow-sm lg:mb-0 mb-10">
-          <SafetyBarChart />
+          <SafetyBarChart data={safety.Plant} />
         </div>
       </div>
-    </div>
+    </div>):<div>
+      <Loading/>
+      </div>}
+    </>
   );
 }

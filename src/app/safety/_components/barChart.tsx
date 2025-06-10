@@ -17,15 +17,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { SeverityLevelWise } from "@/lib/types"
 
 export const description = "A bar chart with a label"
 
-const chartData = [
-  { month: "LOW", desktop: 54 },
-  { month: "MEDIUM", desktop: 154 },
-  { month: "HIGH", desktop: 180 },
-  { month: "NO SEVERITY", desktop: 52 },
-]
+
 
 const chartConfig = {
   desktop: {
@@ -34,7 +30,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartBarLabel() {
+export function ChartBarLabel({SeverityLevel,totalopen}:{SeverityLevel:SeverityLevelWise,totalopen:number}) {
+  const chartData = [
+  { month: "LOW", desktop: SeverityLevel.LOW },
+  { month: "MEDIUM", desktop: SeverityLevel.MEDIUM },
+  { month: "HIGH", desktop: SeverityLevel.HIGH },
+  { month: "NO SEVERITY", desktop: SeverityLevel["NO SEVERITY"] },
+]
   return (
     <Card className="w-full">
       <CardHeader>
@@ -87,7 +89,7 @@ export function ChartBarLabel() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          Total 440 open issues <TrendingUp className="h-4 w-4 text-red-400" />
+          Total {totalopen} open issues <TrendingUp className="h-4 w-4 text-red-400" />
         </div>
         {/* <div className="text-muted-foreground leading-none">
           total 445 open issues
