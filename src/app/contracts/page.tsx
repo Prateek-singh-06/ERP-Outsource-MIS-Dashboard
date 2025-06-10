@@ -117,7 +117,7 @@ export default function FinancePage() {
     <div className=" min-h-screen relative bg-[#f8f9fa] text-[#212529]">
       {/* <Nav /> */}
       <div className="mb-15 p-4">
-        <h1 className="text-3xl font-bold mb-4">ERPs/Contracts details</h1>
+        <h1 className="text-3xl font-bold mb-4">ERPs/Contracts</h1>
         {renderHeadingTabs()}
         <div className={`${expandedGroup===null?"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 items-stretch":"w-full"}`}>
           {filterData(selectedTab).map((erp) => (
