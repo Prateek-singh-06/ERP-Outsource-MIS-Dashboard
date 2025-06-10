@@ -21,10 +21,10 @@ import {
 export const description = "A bar chart with a label"
 
 const chartData = [
-  { month: "LOW", desktop: 53 },
-  { month: "MEDIUM", desktop: 143 },
-  { month: "HIGH", desktop: 163 },
-  { month: "NO SEVERITY", desktop: 48 },
+  { month: "LOW", desktop: 54 },
+  { month: "MEDIUM", desktop: 154 },
+  { month: "HIGH", desktop: 180 },
+  { month: "NO SEVERITY", desktop: 52 },
 ]
 
 const chartConfig = {
@@ -39,7 +39,7 @@ export function ChartBarLabel() {
     <Card className="w-full">
       <CardHeader>
         <CardTitle>Severity Level wise Open issues</CardTitle>
-        <CardDescription>Till June 3</CardDescription>
+        <CardDescription>Till 8 June</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

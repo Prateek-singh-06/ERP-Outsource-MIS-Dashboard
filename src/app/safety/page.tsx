@@ -7,11 +7,11 @@ import SafetyBarChart from "./_components/safteyBarChart";
 
 export default function SafteyPage() {
   const summary = {
-    totalObservations: 1437,
-    totalOpen: 407,
-    closedPercent: 72,
+    totalObservations: 1526,
+    totalOpen: 440,
+    closedPercent: 71,
     avgAgeofclosed: 3,
-    avgAgeofopen: 17,
+    avgAgeofopen: 16,
   };
 
   // const plants = [
