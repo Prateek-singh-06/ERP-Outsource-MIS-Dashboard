@@ -121,7 +121,7 @@ export default function ERPDetailPage() {
         <div className="mb-15">
           <div className="flex flex-col mb-6 space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
             <h1 className="w-full text-2xl font-bold text-center sm:text-left md:text-3xl">
-              {erp.name=="TMS"?erp.companies[0].toUpperCase():erp.name.toUpperCase()}
+              {erp.name=="TRANSPORT MANAGEMENT SYSTEM"?erp.companies[0].toUpperCase():erp.name.toUpperCase()}
             </h1>
             <div className="flex flex-col w-full space-y-3 sm:w-auto sm:flex-row sm:items-center sm:space-y-0 sm:space-x-6">
               <div className="flex items-center justify-center w-full text-lg text-gray-600 sm:justify-start">
