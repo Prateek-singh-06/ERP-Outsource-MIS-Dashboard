@@ -8,7 +8,7 @@ export default function Footer() {
       <p className="text-xs sm:text-base lg:text-lg font-semibold tracking-wide">
         Developed by&nbsp;
         <span className="hover:underline transition">
-        Prateek, Harsh & IT Team
+        Prateek, Harsh & CSE GET Team
         </span>
       </p>
 
