@@ -41,7 +41,7 @@ export function ChartBarLabel({SeverityLevel,totalopen}:{SeverityLevel:SeverityL
     <Card className="w-full">
       <CardHeader>
         <CardTitle>Severity Level wise Open issues</CardTitle>
-        <CardDescription>Till 8 June</CardDescription>
+        <CardDescription>Till 12th June 2025</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
