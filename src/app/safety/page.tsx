@@ -9,6 +9,7 @@ import SafteyData from "@/data/saftey.json";
 import { Safety } from "@/lib/types";
 import Loading from "@/components/Loading";
 import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
+import { DropdownMenuDemo } from "./_components/monthDropDown";
 // import Link from "next/link";
 
 export default function SafetyPage() {
@@ -43,9 +44,15 @@ export default function SafetyPage() {
         <div className="mt-0 max-w-7xl min-h-screen mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           {/* Meetings */}
           <div className="flex flex-col md:flex-row items-center justify-between mb-6">
+            <div  className="flex items-center space-x-6">
             <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black">
               SAFETY OBSERVATION DASHBOARD
             </h1>
+            <div className="hidden" >
+              <DropdownMenuDemo/>
+            </div>
+            </div>
+            
             <div className="bg-gray-100 text-gray-800 px-4 py-1 rounded-lg font-semibold text-base inline-block">
               {/* 12th JUNE 2025 */}
               {safety.Time}

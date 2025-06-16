@@ -32,10 +32,11 @@ const chartConfig = {
 
 export function ChartBarLabel({SeverityLevel,totalopen,Time}:{SeverityLevel:SeverityLevelWise,totalopen:number,Time:number}) {
   const chartData = [
+    { month: "NO SEVERITY", desktop: SeverityLevel["NO SEVERITY"] },
   { month: "LOW", desktop: SeverityLevel.LOW },
   { month: "MEDIUM", desktop: SeverityLevel.MEDIUM },
+
   { month: "HIGH", desktop: SeverityLevel.HIGH },
-  { month: "NO SEVERITY", desktop: SeverityLevel["NO SEVERITY"] },
 ]
   return (
     <Card className="w-full">
@@ -49,7 +50,7 @@ export function ChartBarLabel({SeverityLevel,totalopen,Time}:{SeverityLevel:Seve
             accessibilityLayer
             data={chartData}
             margin={{
-              top: 10,
+              top: 20,
             }}
             barCategoryGap={20}
             barSize={80}
