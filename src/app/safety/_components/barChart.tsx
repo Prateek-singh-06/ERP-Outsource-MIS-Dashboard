@@ -30,7 +30,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ChartBarLabel({SeverityLevel,totalopen}:{SeverityLevel:SeverityLevelWise,totalopen:number}) {
+export function ChartBarLabel({SeverityLevel,totalopen,Time}:{SeverityLevel:SeverityLevelWise,totalopen:number,Time:number}) {
   const chartData = [
   { month: "LOW", desktop: SeverityLevel.LOW },
   { month: "MEDIUM", desktop: SeverityLevel.MEDIUM },
@@ -41,7 +41,7 @@ export function ChartBarLabel({SeverityLevel,totalopen}:{SeverityLevel:SeverityL
     <Card className="w-full">
       <CardHeader>
         <CardTitle>Severity Level wise Open issues</CardTitle>
-        <CardDescription>Till 12th June 2025</CardDescription>
+        <CardDescription>Till {Time}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

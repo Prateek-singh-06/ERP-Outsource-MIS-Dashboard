@@ -131,10 +131,12 @@ export async function fetchGoogleSheetDataSaftey(
     HIGH: severityRow._7,
     "NO SEVERITY": severityRow._8,
   };
+  const time=typedData[0]._7; // Assuming the time is in the first row and second column
   const Safety: Safety = {
     Summary: summary,
     Plant: Plant,
     SeverityLevelWise: SeverityLevelWise,
+    Time: time
   };
   return Safety;
 }

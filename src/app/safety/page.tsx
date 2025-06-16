@@ -47,7 +47,8 @@ export default function SafetyPage() {
               SAFETY OBSERVATION DASHBOARD
             </h1>
             <div className="bg-gray-100 text-gray-800 px-4 py-1 rounded-lg font-semibold text-base inline-block">
-              12th JUNE 2025
+              {/* 12th JUNE 2025 */}
+              {safety.Time}
               {/* {new Date().toLocaleDateString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -233,6 +234,7 @@ export default function SafetyPage() {
               <ChartBarLabel
                 SeverityLevel={safety.SeverityLevelWise}
                 totalopen={safety.Summary.totalOpen}
+                Time={safety.Time}
               />
             </div>
             <div className="lg:w-[60%] w-full lg:h-auto h-[400px]  rounded-xl border border-gray-200 bg-white shadow-sm lg:mb-0 mb-10">
