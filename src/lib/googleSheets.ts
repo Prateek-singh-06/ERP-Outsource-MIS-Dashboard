@@ -108,7 +108,7 @@ export async function fetchGoogleSheetDataSaftey(
     avgAgeofopen: typedData[3]._7,
   };
   const Plant: Plant[] = [];
-  for (let i = 7; i < 14; i++) {
+  for (let i = 7; i < 19; i++) {
     const oneplant: Plant = mapToPlants(data[i] as Record<string, number>);
     Plant.push(oneplant);
     function mapToPlants(mapData: Record<string, number>): Plant {
@@ -124,7 +124,7 @@ export async function fetchGoogleSheetDataSaftey(
       };
     }
   }
-  const severityRow = data[14] as Record<string, number>;
+  const severityRow = data[19] as Record<string, number>;
   const SeverityLevelWise: SeverityLevelWise = {
     LOW: severityRow._5,
     MEDIUM: severityRow._6,

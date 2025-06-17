@@ -6,50 +6,50 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { ChevronDown } from "lucide-react"
+import { useState } from "react"
+import Months from "@/data/saftey.json"
 
-export function DropdownMenuDemo() {
+export function DropdownMenuDemo({selectedMonth,setMonth}:{selectedMonth:string,setMonth:(month:string)=>void}) {
+    const [open, setOpen] = useState(false);
+    
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline" className="w-full justify-between">
+            {selectedMonth || "Select Month"}
+          <ChevronDown
+            className={`ml-2 transition-transform ${open ? "rotate-180" : ""}`}
+            size={18}
+          />
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Select the month</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          {Months.map((month) => (
+            <DropdownMenuItem
+              key={month.Month}
+              onClick={() => {
+                setMonth(month.Month)
+                setOpen(false)
+              }}
+              style={
+                selectedMonth === month.Month
+                  ? { backgroundColor: "#e6f0ff" } // Light blue, adjust as needed
+                  : {}
+              }
+            >
+              {selectedMonth === month.Month ? (
+                <span style={{ marginRight: 1, color: "black" }}>•</span>
+              ) : <span style={{ marginRight: 5}}></span>}
+              {month.Month}
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-          </DropdownMenuSub>
-          <DropdownMenuItem>
-            New Team
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        
+        <DropdownMenuSeparator />      
       </DropdownMenuContent>
     </DropdownMenu>
   )

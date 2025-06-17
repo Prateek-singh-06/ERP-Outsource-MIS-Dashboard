@@ -39,13 +39,13 @@ export function ChartBarLabel({SeverityLevel,totalopen,Time}:{SeverityLevel:Seve
   { month: "HIGH", desktop: SeverityLevel.HIGH },
 ]
   return (
-    <Card className="w-full">
+    <Card className="w-full h-full">
       <CardHeader>
         <CardTitle>Severity Level wise Open issues</CardTitle>
         <CardDescription>Till {Time}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent className="h-full">
+        <ChartContainer config={chartConfig} >
           <BarChart
             accessibilityLayer
             data={chartData}
@@ -89,7 +89,7 @@ export function ChartBarLabel({SeverityLevel,totalopen,Time}:{SeverityLevel:Seve
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
+        <div className="flex gap-2 leading-none font-medium text-lg">
           Total {totalopen} open issues <TrendingUp className="h-4 w-4 text-red-400" />
         </div>
         {/* <div className="text-muted-foreground leading-none">

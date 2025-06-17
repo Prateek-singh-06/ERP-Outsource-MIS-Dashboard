@@ -16,8 +16,8 @@ export default function SafetyBarChart({ data }: { data: Plant[] }) {
       <BarChart
         layout="vertical"
         data={data}
-        //  barCategoryGap={70}
-        margin={{ top: 40, right: 0, left: 20, bottom: 5 }}
+        barCategoryGap={70}
+        margin={{ top: 40, right: 0, left: 0, bottom: 5 }}
         barSize={30}
       >
         <text
@@ -37,9 +37,12 @@ export default function SafetyBarChart({ data }: { data: Plant[] }) {
           tickMargin={0}
           tickLine={false}
           axisLine={true}
+          width={100} // Increase if needed
+          interval={0}
+          tick={{ fontSize: 14 }}
         />
         <Tooltip />
-        <Legend />
+        <Legend wrapperStyle={{ fontSize: 14 }} />
         {/* <Bar dataKey="Open" stackId="a" fill="#3498db" /> */}
         {/* <Bar dataKey="Closed" stackId="a" fill="#2ecc71" /> */}
         <Bar dataKey="NoSeverity" stackId="a" fill="#339900" />
