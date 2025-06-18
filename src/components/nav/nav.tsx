@@ -134,7 +134,7 @@ const Nav: React.FC = () => {
                   Dashboard
                 </Link>
               </li>
-              {/* <li>
+              <li>
                 <Link
                   href="/finance"
                   className={`block font-semibold py-3 px-2 text-gray-800 bg-gray-300 hover:text-orange-600
@@ -150,7 +150,7 @@ const Nav: React.FC = () => {
                 >
                   Financial Status
                 </Link>
-              </li> */}
+              </li>
               <li>
                 <Link
                   href="/contracts"
@@ -210,7 +210,7 @@ const Nav: React.FC = () => {
               Dashboard
             </Link>
           </li>
-          {/* <li>
+          <li>
             <Link
               href="/finance"
               className={`font-semibold relative text-lg px-3 py-2 rounded-md transition-colors after:absolute after:bottom-0 after:left-2
@@ -225,7 +225,7 @@ const Nav: React.FC = () => {
             >
               Financial Status
             </Link>
-          </li> */}
+          </li>
           <li>
             <Link
               href="/contracts"
