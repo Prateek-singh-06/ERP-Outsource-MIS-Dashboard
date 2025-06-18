@@ -254,7 +254,7 @@ export default function SafetyPage() {
                 Time={safety.Time}
               />
             </div>
-            <div className="lg:w-[58%] w-full lg:h-[500px] h-auto  rounded-xl border border-gray-200 bg-white shadow-sm lg:mb-0 mb-10">
+            <div className="lg:w-[58%] w-full lg:h-[500px] h-[500px]  rounded-xl border border-gray-200 bg-white shadow-sm lg:mb-0 mb-10">
               <SafetyBarChart data={safety.Plant} />
             </div>
           </div>
