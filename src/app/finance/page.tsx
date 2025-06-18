@@ -29,8 +29,8 @@ export default function FinancePage() {
     );
   };
   return (
-    <div className=" min-h-screen relative bg-[#f8f9fa] text-[#212529] flex justify-center items-center text-4xl font-bold ">
-      <div className="mb-15 p-4">
+    <div className=" min-h-screen relative bg-[#f8f9fa] text-[#212529] font-bold ">
+      <div className="p-4">
         <h1 className="text-3xl font-bold mb-4">Live Financial status</h1>
         {renderHeadingTabs()}
         <FinancialDashboard />
