@@ -1,6 +1,6 @@
 "use client";
 import { DataCard } from "./_components/Card";
-import { ChartBarLabel } from "./_components/barChart";
+// import { ChartBarLabel } from "./_components/barChart";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import SafteyData from "@/data/saftey.json";
@@ -8,6 +8,7 @@ import { Safety } from "@/lib/types";
 import Loading from "@/components/Loading";
 import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
 import  PieChartCard  from "./_components/pieChartCard";
+import StackedBarChart from "./_components/StackedBarChart";
 // import Link from "next/link";
 export default function SafetyPage() {
   const [safety, setSafety] = useState<Safety | null>(null);
@@ -125,8 +126,13 @@ export default function SafetyPage() {
             />
            
           </div>
-          <div className="flex lg:flex-row flex-col gap-6 mt-6 w-[40%] h-auto border">
+          <div className="flex lg:flex-row flex-col gap-6">
+          <div className="flex lg:flex-row flex-col gap-6 my-6 lg:w-[40%] w-full h-auto">
             <PieChartCard />
+          </div>
+          <div className="flex lg:flex-row flex-col gap-6 my-6 lg:w-[60%] w-full h-auto">
+            <StackedBarChart />
+          </div>
           </div>
         </div>
       ) : (

@@ -1,54 +1,69 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const data = [
-  { name: 'Extra hour charge', value: 337500 },
-  { name: 'Extra KM charge', value: 821145 },
-  { name: 'Base rent', value: 2648900 },
+  {
+    name: 'WB19A1234',
+    "Extra KM Charges": 4000,
+    "Extra hour Charges": 2400,
+    amt: 2400,
+  },
+  {
+    name: 'WB19A5678',
+    "Extra KM Charges": 3000,
+    "Extra hour Charges": 1398,
+    amt: 2210,
+  },
+  {
+    name: 'WB19A9012',
+    "Extra KM Charges": 2000,
+    "Extra hour Charges": 9800,
+    amt: 2290,
+  },
+  {
+    name: 'WB19A3456',
+    "Extra KM Charges": 2780,
+    "Extra hour Charges": 3908,
+    amt: 2000,
+  },
+  {
+    name: 'WB19A7890',
+    "Extra KM Charges": 1890,
+    "Extra hour Charges": 4800,
+    amt: 2181,
+  },
+  {
+    name: 'WB19A2345',
+    "Extra KM Charges": 2390,
+    "Extra hour Charges": 3800,
+    amt: 2500,
+  },
+  {
+    name: 'WB19A6789',
+    "Extra KM Charges": 3490,
+    "Extra hour Charges": 4300,
+    amt: 2100,
+  },
+  {
+    name: 'WB19A0123',
+    "Extra KM Charges": 3490,
+    "Extra hour Charges": 4300,
+    amt: 2100,
+  },
+  {
+    name: 'WB19A4567',
+    "Extra KM Charges": 3490,
+    "Extra hour Charges": 4300,
+    amt: 2100,
+  },
+  {
+    name: 'WB19A8901',
+    "Extra KM Charges": 3490,
+    "Extra hour Charges": 4300,
+    amt: 2100,
+  },
 ];
 
-const COLORS = ['#7582FF', '#87C9F5', '#67D5D0'];
-
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-}: {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  percent: number;
-  index: number;
-}) => {
-  const radius = outerRadius + (outerRadius - innerRadius) * 0.1;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="#22223b"
-      fontWeight={600}
-      fontSize={16}
-      textAnchor={x > cx ? 'start' : 'end'}
-      dominantBaseline="central"
-      style={{
-        textShadow: '0 1px 4px rgba(0,0,0,0.08)',
-        letterSpacing: '0.5px',
-      }}
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
-
-export default function PieChartCard() {
+export default function StackedBarChart() {
   return (
     <div
       className="w-full h-full flex flex-col transition-shadow duration-300 rounded-2xl shadow-xl hover:shadow-2xl"
@@ -70,7 +85,7 @@ export default function PieChartCard() {
           textShadow: '0 2px 8px rgba(120,120,180,0.08)',
         }}
       >
-        Rego Charges Distribution
+        Top 10 Vehicle Rego Extra Charges Distribution
       </h2>
       {/* Description */}
       <p
@@ -95,66 +110,27 @@ export default function PieChartCard() {
           padding: 16,
         }}
       >
-        <ResponsiveContainer width="100%" height={320}>
-          <PieChart>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              label={renderCustomizedLabel}
-              labelLine={false}
-              outerRadius="95%"
-              innerRadius="45%"
-              fill="#8884d8"
-              dataKey="value"
-              isAnimationActive={true}
-              animationDuration={600}
-              animationEasing="ease-in-out"
-              startAngle={30}
-              endAngle={390}
-              stroke="#fff"
-              strokeWidth={2}
-            >
-              {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                  style={{
-                    filter: 'drop-shadow(0 2px 8px rgba(120,120,180,0.10))',
-                  }}
-                />
-              ))}
-            </Pie>
-            <Tooltip
-              contentStyle={{
-                borderRadius: 12,
-                background: '#fff',
-                border: '1px solid #e0e7ff',
-                color: '#3a3a5a',
-                fontWeight: 500,
-                fontSize: 14,
-                boxShadow: '0 2px 8px rgba(120,120,180,0.10)',
-              }}
-              itemStyle={{
-                color: '#3a3a5a',
-                fontWeight: 500,
-                fontSize: 14,
-              }}
-            />
-            <Legend
-              verticalAlign="bottom"
-              align="center"
-              iconType="circle"
-              wrapperStyle={{
-                paddingTop: 24,
-                fontSize: 16,
-                fontWeight: 600,
-                color: '#3a3a5a',
-                letterSpacing: '0.2px',
-              }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+         <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="Extra KM Charges" stackId="a" fill="#8884d8" />
+          <Bar dataKey="Extra hour Charges" stackId="a" fill="#82ca9d" />
+        </BarChart>
+      </ResponsiveContainer>
       </div>
     </div>
   );
