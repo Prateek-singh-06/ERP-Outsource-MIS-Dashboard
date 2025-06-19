@@ -14,12 +14,19 @@ import { DropdownMenuDemo } from "./_components/monthDropDown";
 
 export default function SafetyPage() {
   const [safety, setSafety] = useState<Safety | null>(null);
+  const [selectedMonth, setSelectedMonth] = useState("OVERALL");
 
   useEffect(() => {
     async function fetchTheData() {
       try {
+        let index = SafteyData.findIndex(
+          (item) => item.Month === selectedMonth
+        );
+        if (index === -1) {
+          index = 0; // Default to the first item if not found
+        }
         const response = await fetch(
-          `/api/Saftey?param1=${encodeURIComponent(SafteyData[0].gid)}`
+          `/api/Saftey?param1=${encodeURIComponent(SafteyData[index].gid)}`
         );
         if (!response) {
           throw new Error("failed to fetch the data");
@@ -36,7 +43,7 @@ export default function SafetyPage() {
     const interval = setInterval(fetchTheData, DATA_REFRESH_INTERVAL); // fetch every 20 seconds
 
     return () => clearInterval(interval); // cleanup on unmount
-  }, []);
+  }, [selectedMonth]);
 
   return (
     <>
@@ -44,15 +51,18 @@ export default function SafetyPage() {
         <div className="mt-0 max-w-7xl min-h-screen mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           {/* Meetings */}
           <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-            <div  className="flex items-center space-x-6">
-            <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black">
-              SAFETY OBSERVATION DASHBOARD
-            </h1>
-            <div className="hidden" >
-              <DropdownMenuDemo/>
+            <div className="flex items-center space-x-6">
+              <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black">
+                SAFETY OBSERVATION DASHBOARD
+              </h1>
+              <div className="">
+                <DropdownMenuDemo
+                  setMonth={setSelectedMonth}
+                  selectedMonth={selectedMonth}
+                />
+              </div>
             </div>
-            </div>
-            
+
             <div className="bg-gray-100 text-gray-800 px-4 py-1 rounded-lg font-semibold text-base inline-block">
               {/* 12th JUNE 2025 */}
               {safety.Time}
@@ -237,14 +247,14 @@ export default function SafetyPage() {
             </Link>
           </div>
           <div className="flex lg:flex-row flex-col gap-6 mt-6">
-            <div className="lg:w-[40%] w-full">
+            <div className="lg:w-[42%] w-full">
               <ChartBarLabel
                 SeverityLevel={safety.SeverityLevelWise}
                 totalopen={safety.Summary.totalOpen}
                 Time={safety.Time}
               />
             </div>
-            <div className="lg:w-[60%] w-full lg:h-auto h-[400px]  rounded-xl border border-gray-200 bg-white shadow-sm lg:mb-0 mb-10">
+            <div className="lg:w-[58%] w-full lg:h-[500px] h-[500px]  rounded-xl border border-gray-200 bg-white shadow-sm lg:mb-0 mb-10">
               <SafetyBarChart data={safety.Plant} />
             </div>
           </div>
