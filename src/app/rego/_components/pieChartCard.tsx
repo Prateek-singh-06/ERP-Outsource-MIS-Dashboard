@@ -1,10 +1,11 @@
+import { RegoPieData } from '@/lib/types';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
-const data = [
-  { name: 'Extra hour charge', value: 337500 },
-  { name: 'Extra KM charge', value: 821145 },
-  { name: 'Base rent', value: 2648900 },
-];
+// const data = [
+//   { name: 'Extra hour charge', value: 337500 },
+//   { name: 'Extra KM charge', value: 821145 },
+//   { name: 'Base rent', value: 2648900 },
+// ];
 
 const COLORS = ['#7582FF', '#87C9F5', '#67D5D0'];
 
@@ -48,7 +49,7 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default function PieChartCard() {
+export default function PieChartCard({ data }: { data: RegoPieData[] }) {
   return (
     <div
       className="w-full h-full flex flex-col transition-shadow duration-300 rounded-2xl shadow-xl hover:shadow-2xl"
@@ -95,7 +96,7 @@ export default function PieChartCard() {
           padding: 16,
         }}
       >
-        <ResponsiveContainer width="100%" height={320}>
+        <ResponsiveContainer width="100%" height={400}>
           <PieChart>
             <Pie
               data={data}
@@ -103,7 +104,7 @@ export default function PieChartCard() {
               cy="50%"
               label={renderCustomizedLabel}
               labelLine={false}
-              outerRadius="95%"
+              outerRadius="90%"
               innerRadius="45%"
               fill="#8884d8"
               dataKey="value"
@@ -147,8 +148,8 @@ export default function PieChartCard() {
               iconType="circle"
               wrapperStyle={{
                 paddingTop: 24,
-                fontSize: 16,
-                fontWeight: 600,
+                fontSize: 14,
+                fontWeight: 500,
                 color: '#3a3a5a',
                 letterSpacing: '0.2px',
               }}

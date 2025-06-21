@@ -1,7 +1,7 @@
 [
   {
-    "name": "Rego Billing",
-    "csvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQwRacESWV-xDZGbCWjBwf2QeWcb3Xl_08Psav7vRrUiEClmCaYERqztLiQbX1ol-QzjLImPQR1L5vV/pub?gid=1125011902&single=true&output=csv",
-    "url": "https://docs.google.com/spreadsheets/d/1C5IL6xeTZOdIzo4jxwfbvMcyHlkjoT9QL-X3-MGyckM/edit?gid=1125011902#gid=1125011902"
+    "Month": "Rego Billing",
+    "gid": "1125011902"
   }
+  
 ]
