@@ -104,5 +104,26 @@ export interface Safety{
   SeverityLevelWise:SeverityLevelWise;
 }
 
+export interface RegoSummary {
+  TotalKM: number;
+  TotalExtraKM: number;
+  TotalExtraHour: number;
+  TotalExtraBill: number;
+}
 
+export interface RegoPieData {
+  name: string;
+  value: number;
+}
+export interface RegoBarData {
+  name: string;
+  "Extra KM Charges": number;
+  "Extra hour Charges": number;
+  "Total Extra Charges"?: number;
+}
+export interface Rego {
+  Summary: RegoSummary;
+  PieData: RegoPieData[];
+  BarData: RegoBarData[];
+}
 
