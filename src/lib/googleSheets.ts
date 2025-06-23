@@ -152,9 +152,12 @@ export async function fetchGoogleSheetDataRego(
   if (!Month) {
     Month = (new Date().toLocaleString("default", { month: "long" })).toUpperCase();
   }
-  let regodatafiltered = regodata.filter(
+  const regodatafiltered = regodata.filter(
     (row) => row.month === Month 
   );
+  if (regodatafiltered.length === 0) {
+    throw new Error(`No data found for month: ${Month}`);
+  }
   const SAFETY_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${process.env.NEXT_PUBLIC_REGO_CSV_ID}/pub?gid=${gid}&single=true&output=csv`;
   const response2 = await fetch(SAFETY_CSV_URL, {
     next: { revalidate: 0 },
@@ -174,7 +177,7 @@ export async function fetchGoogleSheetDataRego(
   // console.log(typedData[totalLength - 1]);
   function timeStringToHours(time: string | undefined): number {
     if (!time) return 0;
-    const [hours, minutes, second] = time.split(":").map(Number);
+    const [hours, minutes] = time.split(":").map(Number);
     if (isNaN(hours) || isNaN(minutes)) return 0;
     return hours + minutes / 60;
   }
@@ -222,15 +225,15 @@ export async function fetchGoogleSheetDataRego(
   }
 
   const RegoPieData: RegoPieData[] = [];
-  let BaseRent = {
+  const BaseRent = {
     name: "Base Rent",
     value: 0,
   };
-  let ExtraKMCharges = {
+  const ExtraKMCharges = {
     name: "Extra KM Charges",
     value: 0,
   };
-  let ExtraHourCharges = {
+  const ExtraHourCharges = {
     name: "Extra hour Charges",
     value: 0,
   };
@@ -254,7 +257,7 @@ export async function fetchGoogleSheetDataRego(
     const row = typedData[i];
 
     if (type === "all" || String(row["Type"]) === type) {
-      let oneRegoVehicle: RegoBarData = {
+      const oneRegoVehicle: RegoBarData = {
         name: String(row["Vehicle No"] ?? ""),
         "Extra KM Charges":
           extractNumber(String(typedData[i]["Extra KM Charges"])) || 0,

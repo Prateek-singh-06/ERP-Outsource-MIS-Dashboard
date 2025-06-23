@@ -1,69 +1,6 @@
 import { RegoBarData } from '@/lib/types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const data = [
-  {
-    name: 'WB19A1234',
-    "Extra KM Charges": 4000,
-    "Extra hour Charges": 2400,
-    amt: 2400,
-  },
-  {
-    name: 'WB19A5678',
-    "Extra KM Charges": 3000,
-    "Extra hour Charges": 1398,
-    amt: 2210,
-  },
-  {
-    name: 'WB19A9012',
-    "Extra KM Charges": 2000,
-    "Extra hour Charges": 9800,
-    amt: 2290,
-  },
-  {
-    name: 'WB19A3456',
-    "Extra KM Charges": 2780,
-    "Extra hour Charges": 3908,
-    amt: 2000,
-  },
-  {
-    name: 'WB19A7890',
-    "Extra KM Charges": 1890,
-    "Extra hour Charges": 4800,
-    amt: 2181,
-  },
-  {
-    name: 'WB19A2345',
-    "Extra KM Charges": 2390,
-    "Extra hour Charges": 3800,
-    amt: 2500,
-  },
-  {
-    name: 'WB19A6789',
-    "Extra KM Charges": 3490,
-    "Extra hour Charges": 4300,
-    amt: 2100,
-  },
-  {
-    name: 'WB19A0123',
-    "Extra KM Charges": 3490,
-    "Extra hour Charges": 4300,
-    amt: 2100,
-  },
-  {
-    name: 'WB19A4567',
-    "Extra KM Charges": 3490,
-    "Extra hour Charges": 4300,
-    amt: 2100,
-  },
-  {
-    name: 'WB19A8901',
-    "Extra KM Charges": 3490,
-    "Extra hour Charges": 4300,
-    amt: 2100,
-  },
-];
-
 export default function StackedBarChart({data}: {data: RegoBarData[]}) {
   // Ensure data is not empty and slice the top 10 entries
   let topTenData: RegoBarData[] = [];

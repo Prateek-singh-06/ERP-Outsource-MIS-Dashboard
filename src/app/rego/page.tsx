@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import RegoData from "@/data/RegoBilling.json";
 import { Rego } from "@/lib/types";
 import Loading from "@/components/Loading";
-import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
+// import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
 import PieChartCard from "./_components/pieChartCard";
 import StackedBarChart from "./_components/StackedBarChart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
