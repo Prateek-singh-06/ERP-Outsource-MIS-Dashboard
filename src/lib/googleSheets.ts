@@ -12,6 +12,7 @@ import {
   SafetySummary,
   SeverityLevelWise,
 } from "@/lib/types";
+import regodata from "../data/RegoBilling.json";
 
 const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${process.env.MAIN_SHEET_ID}/pub?gid=0&single=true&output=csv`;
 
@@ -145,16 +146,21 @@ export async function fetchGoogleSheetDataSaftey(
 }
 export async function fetchGoogleSheetDataRego(
   gid: string | null,
-  type: string | null
+  type: string | null,
+  Month?: string | null
 ): Promise<Rego> {
-  console.log(type);
+  if (!Month) {
+    Month = (new Date().toLocaleString("default", { month: "long" })).toUpperCase();
+  }
+  let regodatafiltered = regodata.filter(
+    (row) => row.month === Month 
+  );
   const SAFETY_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${process.env.NEXT_PUBLIC_REGO_CSV_ID}/pub?gid=${gid}&single=true&output=csv`;
   const response2 = await fetch(SAFETY_CSV_URL, {
     next: { revalidate: 0 },
   });
 
   const csvData = await response2.text();
-  
 
   const { data } = Papa.parse(csvData, {
     header: true,
@@ -167,25 +173,55 @@ export async function fetchGoogleSheetDataRego(
   const totalLength = typedData.length;
   // console.log(typedData[totalLength - 1]);
   function timeStringToHours(time: string | undefined): number {
-  if (!time) return 0;
-  const [hours, minutes,second] = time.split(":").map(Number);
-  if (isNaN(hours) || isNaN(minutes)) return 0;
-  return hours + minutes / 60;
-}
-function extractNumber(value: string | undefined): number {
-  if (!value) return 0;
-  // Remove all non-digit and non-decimal characters
-  const num = value.replace(/[^0-9.]/g, "");
-  return Number(num) || 0;
-}
+    if (!time) return 0;
+    const [hours, minutes, second] = time.split(":").map(Number);
+    if (isNaN(hours) || isNaN(minutes)) return 0;
+    return hours + minutes / 60;
+  }
+  function extractNumber(value: string | undefined): number {
+    if (!value) return 0;
+    // Remove all non-digit and non-decimal characters
+    const num = value.replace(/[^0-9.]/g, "");
+    return Number(num) || 0;
+  }
 
   const regosummary: RegoSummary = {
-    TotalKM: typedData[Math.min(35,totalLength-1)]['Total Running Kms'],
-    TotalExtraKM: typedData[Math.min(35,totalLength-1)]['EXTRA KMS'],
-    TotalExtraHour: timeStringToHours(String(typedData[Math.min(35,totalLength-1)]['Extra Hours'])),
-    TotalExtraBill: extractNumber(String(typedData[Math.min(35,totalLength-1)]['Total Rented \n+ Extra KMs \n+ Extra HRs'])),
+    TotalKM: typedData[Math.min(35, totalLength - 1)]["Total Running Kms"],
+    TotalExtraKM: typedData[Math.min(35, totalLength - 1)]["EXTRA KMS"],
+    TotalExtraHour: timeStringToHours(
+      String(typedData[Math.min(35, totalLength - 1)]["Extra Hours"])
+    ),
+    TotalExtraBill: extractNumber(
+      String(
+        typedData[Math.min(35, totalLength - 1)][
+          "Total Rented \n+ Extra KMs \n+ Extra HRs"
+        ]
+      )
+    ),
   };
-  const RegoPieData:RegoPieData[] = [];
+  if (type !== "all") {
+    regosummary.TotalKM = 0;
+        regosummary.TotalExtraKM = 0;
+        regosummary.TotalExtraHour = 0;
+        regosummary.TotalExtraBill = 0;
+    for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
+      const row = typedData[i];
+      
+      if (String(row["Type"]) === type) {
+        
+        regosummary.TotalKM +=row["Total Running Kms"] || 0;
+        regosummary.TotalExtraBill +=
+          extractNumber(
+            String(row["Total Rented \n+ Extra KMs \n+ Extra HRs"])
+          ) || 0;
+        regosummary.TotalExtraKM +=row["EXTRA KMS"] || 0;
+        regosummary.TotalExtraHour +=
+          timeStringToHours(String(row["Extra Hours"])) || 0;
+      }
+    }
+  }
+
+  const RegoPieData: RegoPieData[] = [];
   let BaseRent = {
     name: "Base Rent",
     value: 0,
@@ -198,37 +234,44 @@ function extractNumber(value: string | undefined): number {
     name: "Extra hour Charges",
     value: 0,
   };
-  for (let i = 0; i < Math.min(35,totalLength-1); i++) {
+  for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
     const row = typedData[i];
-    if (type === "all" || String(row['Type']) === type) {
-      BaseRent.value += extractNumber(String(row['Actual Rent'])) || 0;
-      ExtraKMCharges.value += extractNumber(String(row['Extra KM Charges'])) || 0;
-      ExtraHourCharges.value += extractNumber(String(row['Extra HRs. Charges'])) || 0;
+    if (type === "all" || String(row["Type"]) === type) {
+      BaseRent.value += extractNumber(String(row["Actual Rent"])) || 0;
+      ExtraKMCharges.value +=
+        extractNumber(String(row["Extra KM Charges"])) || 0;
+      ExtraHourCharges.value +=
+        extractNumber(String(row["Extra HRs. Charges"])) || 0;
     }
   }
-  
+
   RegoPieData.push(ExtraKMCharges);
   RegoPieData.push(ExtraHourCharges);
   RegoPieData.push(BaseRent);
 
   const RegoBarData: RegoBarData[] = [];
-  for (let i = 0; i < Math.min(35,totalLength-1); i++) {
+  for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
     const row = typedData[i];
-    
-    
-    if (type === "all" || String(row['Type']) === type) {
+
+    if (type === "all" || String(row["Type"]) === type) {
       let oneRegoVehicle: RegoBarData = {
-      name: String(row['Vehicle No'] ?? ""),
-      "Extra KM Charges": extractNumber(String(typedData[i]['Extra KM Charges'])) || 0,
-      "Extra hour Charges": extractNumber(String(typedData[i]['Extra HRs. Charges'])) || 0,
-      "Total Extra Charges": 0, // will set below
-    };
-      oneRegoVehicle["Total Extra Charges"] = oneRegoVehicle["Extra KM Charges"] + oneRegoVehicle["Extra hour Charges"];
+        name: String(row["Vehicle No"] ?? ""),
+        "Extra KM Charges":
+          extractNumber(String(typedData[i]["Extra KM Charges"])) || 0,
+        "Extra hour Charges":
+          extractNumber(String(typedData[i]["Extra HRs. Charges"])) || 0,
+        "Total Extra Charges": 0, // will set below
+      };
+      oneRegoVehicle["Total Extra Charges"] =
+        oneRegoVehicle["Extra KM Charges"] +
+        oneRegoVehicle["Extra hour Charges"];
       RegoBarData.push(oneRegoVehicle);
       // typedData[i]['Total Rented \n+ Extra KMs \n+ Extra HRs'] || 0
     }
   }
-  RegoBarData.sort((a, b) => (b["Total Extra Charges"] || 0) - (a["Total Extra Charges"] || 0));
+  RegoBarData.sort(
+    (a, b) => (b["Total Extra Charges"] || 0) - (a["Total Extra Charges"] || 0)
+  );
   const Rego: Rego = {
     Summary: regosummary,
     PieData: RegoPieData,
