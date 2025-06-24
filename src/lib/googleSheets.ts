@@ -1,12 +1,18 @@
+// "use server";
 import Papa from "papaparse";
 import {
   ERP,
   ERPInput,
   Plant,
+  Rego,
+  RegoBarData,
+  RegoPieData,
+  RegoSummary,
   Safety,
   SafetySummary,
   SeverityLevelWise,
 } from "@/lib/types";
+import regodata from "../data/RegoBilling.json";
 
 const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${process.env.MAIN_SHEET_ID}/pub?gid=0&single=true&output=csv`;
 
@@ -139,4 +145,144 @@ export async function fetchGoogleSheetDataSaftey(
     Time: time
   };
   return Safety;
+}
+export async function fetchGoogleSheetDataRego(
+  gid: string | null,
+  type: string | null,
+  Month?: string | null
+): Promise<Rego> {
+  if (!Month) {
+    Month = (new Date().toLocaleString("default", { month: "long" })).toUpperCase();
+  }
+  const regodatafiltered = regodata.filter(
+    (row) => row.month === Month 
+  );
+  if (regodatafiltered.length === 0) {
+    throw new Error(`No data found for month: ${Month}`);
+  }
+  // console.log("Rego Data for month:",regodatafiltered[0].month," data:", regodatafiltered[0].csvId);
+  const SAFETY_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${regodatafiltered[0].csvId}/pub?gid=${regodatafiltered[0].gid}&single=true&output=csv`;
+  const response2 = await fetch(SAFETY_CSV_URL, {
+    next: { revalidate: 0 },
+  });
+
+  const csvData = await response2.text();
+
+  const { data } = Papa.parse(csvData, {
+    header: true,
+    skipEmptyLines: true,
+    dynamicTyping: true,
+  });
+
+  // Assert type for data rows
+  const typedData = data as Array<Record<string, number>>;
+  const totalLength = typedData.length;
+
+  // console.log(totalLength - 1);
+  function timeStringToHours(time: string | undefined): number {
+    if (!time) return 0;
+    const [hours, minutes] = time.split(":").map(Number);
+    if (isNaN(hours) || isNaN(minutes)) return 0;
+    return hours + minutes / 60;
+  }
+  function extractNumber(value: string | undefined): number {
+    if (!value) return 0;
+    // Remove all non-digit and non-decimal characters
+    const num = value.replace(/[^0-9.]/g, "");
+    return Number(num) || 0;
+  }
+
+  const regosummary: RegoSummary = {
+    TotalKM: typedData[Math.min(35, totalLength - 1)]["Total Running Kms"],
+    TotalExtraKM: typedData[Math.min(35, totalLength - 1)]["EXTRA KMS"],
+    TotalExtraHour: timeStringToHours(
+      String(typedData[Math.min(35, totalLength - 1)]["Extra Hours"])
+    ),
+    TotalExtraBill: extractNumber(
+      String(
+        typedData[Math.min(35, totalLength - 1)][
+          "Total Rented \n+ Extra KMs \n+ Extra HRs"
+        ]
+      )
+    ),
+  };
+  if (type !== "all") {
+    regosummary.TotalKM = 0;
+        regosummary.TotalExtraKM = 0;
+        regosummary.TotalExtraHour = 0;
+        regosummary.TotalExtraBill = 0;
+    for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
+      const row = typedData[i];
+      
+      if (String(row["Type"]) === type) {
+        
+        regosummary.TotalKM +=row["Total Running Kms"] || 0;
+        regosummary.TotalExtraBill +=
+          extractNumber(
+            String(row["Total Rented \n+ Extra KMs \n+ Extra HRs"])
+          ) || 0;
+        regosummary.TotalExtraKM +=row["EXTRA KMS"] || 0;
+        regosummary.TotalExtraHour +=
+          timeStringToHours(String(row["Extra Hours"])) || 0;
+      }
+    }
+  }
+
+  const RegoPieData: RegoPieData[] = [];
+  const BaseRent = {
+    name: "Base Rent",
+    value: 0,
+  };
+  const ExtraKMCharges = {
+    name: "Extra KM Charges",
+    value: 0,
+  };
+  const ExtraHourCharges = {
+    name: "Extra hour Charges",
+    value: 0,
+  };
+  for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
+    const row = typedData[i];
+    if (type === "all" || String(row["Type"]) === type) {
+      BaseRent.value += extractNumber(String(row["Actual Rent"])) || 0;
+      ExtraKMCharges.value +=
+        extractNumber(String(row["Extra KM Charges"])) || 0;
+      ExtraHourCharges.value +=
+        extractNumber(String(row["Extra HRs. Charges"])) || 0;
+    }
+  }
+
+  RegoPieData.push(ExtraKMCharges);
+  RegoPieData.push(ExtraHourCharges);
+  RegoPieData.push(BaseRent);
+
+  const RegoBarData: RegoBarData[] = [];
+  for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
+    const row = typedData[i];
+
+    if (type === "all" || String(row["Type"]) === type) {
+      const oneRegoVehicle: RegoBarData = {
+        name: String(row["Vehicle No"] ?? ""),
+        "Extra KM Charges":
+          extractNumber(String(typedData[i]["Extra KM Charges"])) || 0,
+        "Extra hour Charges":
+          extractNumber(String(typedData[i]["Extra HRs. Charges"])) || 0,
+        "Total Extra Charges": 0, // will set below
+      };
+      oneRegoVehicle["Total Extra Charges"] =
+        oneRegoVehicle["Extra KM Charges"] +
+        oneRegoVehicle["Extra hour Charges"];
+      RegoBarData.push(oneRegoVehicle);
+      // typedData[i]['Total Rented \n+ Extra KMs \n+ Extra HRs'] || 0
+    }
+  }
+  RegoBarData.sort(
+    (a, b) => (b["Total Extra Charges"] || 0) - (a["Total Extra Charges"] || 0)
+  );
+  const Rego: Rego = {
+    Summary: regosummary,
+    PieData: RegoPieData,
+    BarData: RegoBarData,
+  };
+  return Rego;
 }
