@@ -102,6 +102,7 @@ export interface Safety{
   Summary:SafetySummary;
   Plant:Plant[];
   SeverityLevelWise:SeverityLevelWise;
+  Time: number;
 }
 
 export interface RegoSummary {
