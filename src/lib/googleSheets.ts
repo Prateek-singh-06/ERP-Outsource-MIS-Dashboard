@@ -158,7 +158,8 @@ export async function fetchGoogleSheetDataRego(
   if (regodatafiltered.length === 0) {
     throw new Error(`No data found for month: ${Month}`);
   }
-  const SAFETY_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${process.env.NEXT_PUBLIC_REGO_CSV_ID}/pub?gid=${gid}&single=true&output=csv`;
+  // console.log("Rego Data for month:",regodatafiltered[0].month," data:", regodatafiltered[0].csvId);
+  const SAFETY_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${regodatafiltered[0].csvId}/pub?gid=${regodatafiltered[0].gid}&single=true&output=csv`;
   const response2 = await fetch(SAFETY_CSV_URL, {
     next: { revalidate: 0 },
   });
@@ -174,7 +175,8 @@ export async function fetchGoogleSheetDataRego(
   // Assert type for data rows
   const typedData = data as Array<Record<string, number>>;
   const totalLength = typedData.length;
-  // console.log(typedData[totalLength - 1]);
+
+  // console.log(totalLength - 1);
   function timeStringToHours(time: string | undefined): number {
     if (!time) return 0;
     const [hours, minutes] = time.split(":").map(Number);

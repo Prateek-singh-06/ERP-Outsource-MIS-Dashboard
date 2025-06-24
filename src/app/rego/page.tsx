@@ -10,19 +10,19 @@ import Loading from "@/components/Loading";
 import PieChartCard from "./_components/pieChartCard";
 import StackedBarChart from "./_components/StackedBarChart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectGroup,
+//   SelectItem,
+//   SelectLabel,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
 // import Link from "next/link";
 export default function RegoPage() {
   const [rego, setRego] = useState<Rego | null>(null);
-  const [month, setMonth] = useState<string>("MAY");
+  const [month] = useState<string>("MAY");
   const [Type, setType] = useState<string>("all");
 
   useEffect(() => {
@@ -133,20 +133,20 @@ export default function RegoPage() {
               REGO DASHBOARD
             </h1>
             <div className="ml-5">
-              <Select value={month} onValueChange={setMonth}>
+              {/* <Select value={month} onValueChange={setMonth}>
                 <SelectTrigger className="w-[160px]">
                   <SelectValue placeholder="Select a Month"  />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Months</SelectLabel>
-                    {/* <SelectItem value="OVERALL">OVERALL</SelectItem> */}
+                    <SelectItem value="OVERALL">OVERALL</SelectItem> 
+                    <SelectItem value="APRIL">APRIL</SelectItem>
                     <SelectItem value="MAY">MAY</SelectItem>
                     <SelectItem value="JUNE">JUNE</SelectItem>
-                    <SelectItem value="JULY">JULY</SelectItem>
                   </SelectGroup>
                 </SelectContent>
-              </Select>
+              </Select> */}
             </div>
             </div>
             <div>
