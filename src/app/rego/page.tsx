@@ -247,7 +247,7 @@ export default function RegoPage() {
               target="_blank"
             >
               <DataCard
-                title="Total Extra Bill"
+                title="Total Bill"
                 type="rupee"
                 value={Math.round(rego.Summary.TotalExtraBill)}
                 subtitle="Total extra bill incurred "
