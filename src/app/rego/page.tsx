@@ -10,19 +10,18 @@ import Loading from "@/components/Loading";
 import PieChartCard from "./_components/pieChartCard";
 import StackedBarChart from "./_components/StackedBarChart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectLabel,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-// import Link from "next/link";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export default function RegoPage() {
   const [rego, setRego] = useState<Rego | null>(null);
-  const [month] = useState<string>("MAY");
+  const [month, setMonth] = useState<string>("MAY");
   const [Type, setType] = useState<string>("all");
 
   useEffect(() => {
@@ -31,7 +30,9 @@ export default function RegoPage() {
         const response = await fetch(
           `/api/rego?param1=${encodeURIComponent(
             RegoData[0].gid
-          )}&param2=${encodeURIComponent(Type)}&param3=${encodeURIComponent(month)}`,
+          )}&param2=${encodeURIComponent(Type)}&param3=${encodeURIComponent(
+            month
+          )}`
         );
         if (!response) {
           throw new Error("failed to fetch the data");
@@ -121,7 +122,9 @@ export default function RegoPage() {
       </svg>
     ),
   };
-
+const selected = RegoData.find((item) => item.month === month);
+const liveId = selected?.liveId || "";
+const gid = selected?.gid || "";
   return (
     <>
       {rego ? (
@@ -129,25 +132,25 @@ export default function RegoPage() {
           {/* Meetings */}
           <div className="flex flex-col md:flex-row items-center justify-between mb-0">
             <div className="flex items-center justify-between w-full md:w-auto">
-            <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black mr-5">
-              REGO DASHBOARD
-            </h1>
-            <div className="ml-5">
-              {/* <Select value={month} onValueChange={setMonth}>
-                <SelectTrigger className="w-[160px]">
-                  <SelectValue placeholder="Select a Month"  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Months</SelectLabel>
-                    <SelectItem value="OVERALL">OVERALL</SelectItem> 
-                    <SelectItem value="APRIL">APRIL</SelectItem>
-                    <SelectItem value="MAY">MAY</SelectItem>
-                    <SelectItem value="JUNE">JUNE</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select> */}
-            </div>
+              <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black mr-5">
+                REGO DASHBOARD
+              </h1>
+              <div className="ml-5">
+                <Select value={month} onValueChange={setMonth}>
+                  <SelectTrigger className="w-[160px]">
+                    <SelectValue placeholder="Select a Month" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Months</SelectLabel>
+                      {/* <SelectItem value="OVERALL">OVERALL</SelectItem>  */}
+                      <SelectItem value="APRIL">APRIL</SelectItem>
+                      <SelectItem value="MAY">MAY</SelectItem>
+                      <SelectItem value="JUNE">JUNE</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             <div>
               <Tabs defaultValue={Type} className="w-auto h-auto">
@@ -193,7 +196,7 @@ export default function RegoPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-0">
             <Link
-              href={`https://docs.google.com/spreadsheets/d/${process.env.NEXT_PUBLIC_REGO_LIVE_ID}/edit?gid=${RegoData[0].gid}#gid=${RegoData[0].gid}`}
+              href={`https://docs.google.com/spreadsheets/d/${liveId}/edit?gid=${gid}#gid=${gid}`}
               className="no-underline h-full"
               target="_blank"
             >
@@ -210,7 +213,7 @@ export default function RegoPage() {
 
             {/* Total Extra KM Card - Speed Icon */}
             <Link
-              href={`https://docs.google.com/spreadsheets/d/${process.env.NEXT_PUBLIC_REGO_LIVE_ID}/edit?gid=${RegoData[0].gid}#gid=${RegoData[0].gid}`}
+              href={`https://docs.google.com/spreadsheets/d/${liveId}/edit?gid=${gid}#gid=${gid}`}
               className="no-underline h-full"
               target="_blank"
             >
@@ -226,7 +229,7 @@ export default function RegoPage() {
             </Link>
             {/* Total Extra Hour Card - Clock Icon */}
             <Link
-              href={`https://docs.google.com/spreadsheets/d/${process.env.NEXT_PUBLIC_REGO_LIVE_ID}/edit?gid=${RegoData[0].gid}#gid=${RegoData[0].gid}`}
+              href={`https://docs.google.com/spreadsheets/d/${liveId}/edit?gid=${gid}#gid=${gid}`}
               className="no-underline h-full"
               target="_blank"
             >
@@ -242,7 +245,7 @@ export default function RegoPage() {
             </Link>
             {/* Total Extra Bill Card - Rupee Icon */}
             <Link
-              href={`https://docs.google.com/spreadsheets/d/${process.env.NEXT_PUBLIC_REGO_LIVE_ID}/edit?gid=${RegoData[0].gid}#gid=${RegoData[0].gid}`}
+              href={`https://docs.google.com/spreadsheets/d/${liveId}/edit?gid=${gid}#gid=${gid}`}
               className="no-underline h-full"
               target="_blank"
             >
