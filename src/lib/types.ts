@@ -122,9 +122,14 @@ export interface RegoBarData {
   "Extra hour Charges": number;
   "Total Extra Charges"?: number;
 }
+export interface VehicleUtilization {
+  Utilization: number;
+  Vehicle: string;
+}
 export interface Rego {
   Summary: RegoSummary;
   PieData: RegoPieData[];
   BarData: RegoBarData[];
+  Utilization:VehicleUtilization[];
 }
 
