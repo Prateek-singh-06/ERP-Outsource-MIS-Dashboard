@@ -191,7 +191,6 @@ export async function fetchGoogleSheetDataRego(
     const num = value.replace(/[^0-9.]/g, "");
     return Number(num) || 0;
   }
-  console.log(typedData)
 
   const regosummary: RegoSummary = {
     TotalKM: typedData[Math.min(35, totalLength - 1)]["Total Running Kms"],

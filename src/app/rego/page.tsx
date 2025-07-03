@@ -270,7 +270,7 @@ const gid = selected?.gid || "";
             </div>
           </div>
           <div>
-            <VehicleUtilizationChart UtilizationData={rego.Utilization}/>
+            <VehicleUtilizationChart UtilizationData={rego.Utilization} type={Type}/>
           </div>
         </div>
       ) : (
