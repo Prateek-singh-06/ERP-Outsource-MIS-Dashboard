@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import VehicleUtilizationChart from "./_components/Utilization";
 export default function RegoPage() {
   const [rego, setRego] = useState<Rego | null>(null);
   const [month, setMonth] = useState<string>("MAY");
@@ -267,6 +268,9 @@ const gid = selected?.gid || "";
             <div className="flex lg:flex-row flex-col gap-6 my-6 lg:w-[60%] w-full h-auto">
               <StackedBarChart data={rego.BarData} />
             </div>
+          </div>
+          <div>
+            <VehicleUtilizationChart UtilizationData={rego.Utilization} type={Type}/>
           </div>
         </div>
       ) : (

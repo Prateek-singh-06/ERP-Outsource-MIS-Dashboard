@@ -241,9 +241,15 @@ export async function fetchGoogleSheetDataRego(
     name: "Extra hour Charges",
     value: 0,
   };
+  const UtilizationData=[];
   for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
     const row = typedData[i];
     if (type === "all" || String(row["Type"]) === type) {
+      const VehicleUtilization={
+          Utilization:extractNumber(String(row["UTILIZATION % "])),
+          Vehicle:String(row["Vehicle No"])
+      }
+      UtilizationData.push(VehicleUtilization);
       BaseRent.value += extractNumber(String(row["Actual Rent"])) || 0;
       ExtraKMCharges.value +=
         extractNumber(String(row["Extra KM Charges"])) || 0;
@@ -283,6 +289,7 @@ export async function fetchGoogleSheetDataRego(
     Summary: regosummary,
     PieData: RegoPieData,
     BarData: RegoBarData,
+    Utilization:UtilizationData,
   };
   return Rego;
 }
