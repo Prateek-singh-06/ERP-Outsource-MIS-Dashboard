@@ -29,6 +29,7 @@ export default function SafetyPage() {
         const response = await fetch(
           `/api/Saftey?param1=${encodeURIComponent(SafteyData[index].gid)}`
         );
+        
         if (!response) {
           throw new Error("failed to fetch the data");
         }
@@ -260,7 +261,7 @@ export default function SafetyPage() {
             </div>
           </div>
           <div>
-            <AttendanceDashboard/>
+            <AttendanceDashboard selectedMonth={selectedMonth} />
           </div>
         </div>
       ) : (

@@ -9,11 +9,12 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { SafetyEmployeeAttendance } from "@/lib/types";
 
 interface EmployeeDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  employee: any | null;
+  employee: SafetyEmployeeAttendance | null;
   month?: number; // 1-based (e.g. 6 for June)
   year?: number; // e.g. 2025
 }
@@ -87,7 +88,7 @@ export default function EmployeeDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[1200px] max-w-non !max-w-[95vw]">
+      <DialogContent className="w-[1100px] max-w-non !max-w-[95vw]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-purple-800">
             {employee ? employee.name : "Employee Details"}
@@ -111,7 +112,7 @@ export default function EmployeeDialog({
         {employee && (
           <div>
             {/* Attendance Summary */}
-            <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex flex-wrap gap-3 mb-2">
               {Object.entries(summary).map(([status, count]) => (
                 <div
                   key={status}
@@ -147,20 +148,11 @@ export default function EmployeeDialog({
                   if (idx < attendance.length) {
                     // Attendance day
                     return (
-                      // <div
-                      //   key={idx}
-                      //   className="flex flex-col items-center justify-between p-2 sm:p-3 border border-gray-200 rounded-xl bg-gray-50 min-h-[80px] shadow-sm hover:shadow-md transition-shadow"
-                      // >
-                      //   <span className="text-sm font-medium text-gray-500">
-                      //     {idx + 1}
-                      //   </span>
-                      //   {getStatusBadge(attendance[idx])}
-                      // </div>
                       <div
                         key={idx}
-                        className="group relative flex flex-col items-center justify-between p-3 sm:p-4 
+                        className="group relative flex flex-col items-center justify-between px-3 py-1 sm:px-3  sm:py-1
              border border-gray-200/60 rounded-2xl bg-white/80 backdrop-blur-sm
-             min-h-[90px] shadow-sm hover:shadow-lg hover:shadow-blue-100/50
+             min-h-[56px] shadow-sm hover:shadow-lg hover:shadow-blue-100/50
              transition-all duration-300 ease-out hover:scale-105 hover:border-blue-200/80
              cursor-pointer overflow-hidden"
                       >
@@ -197,7 +189,7 @@ export default function EmployeeDialog({
                     return (
                       <div
                         key={idx}
-                        className="group relative flex flex-col items-center justify-between p-3 sm:p-4 
+                        className="group relative flex flex-col items-center justify-between px-3 py-1 sm:p-4 
              border border-gray-200/60 rounded-2xl bg-white/80 backdrop-blur-sm
              min-h-[90px] shadow-sm hover:shadow-lg hover:shadow-blue-100/50
              transition-all duration-300 ease-out hover:scale-105 hover:border-blue-200/80

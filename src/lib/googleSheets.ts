@@ -9,6 +9,8 @@ import {
   RegoPieData,
   RegoSummary,
   Safety,
+  SafetyAttendanceData,
+  SafetyAttendanceSummary,
   SafetySummary,
   SeverityLevelWise,
 } from "@/lib/types";
@@ -137,30 +139,99 @@ export async function fetchGoogleSheetDataSaftey(
     HIGH: severityRow._7,
     "NO SEVERITY": severityRow._8,
   };
-  const time=typedData[0]._7; // Assuming the time is in the first row and second column
+  const time = typedData[0]._7; // Assuming the time is in the first row and second column
   const Safety: Safety = {
     Summary: summary,
     Plant: Plant,
     SeverityLevelWise: SeverityLevelWise,
-    Time: time
+    Time: time,
   };
   return Safety;
 }
+export async function fetchGoogleSheetDataSafteyAttendance(
+  gid: string | null
+): Promise<SafetyAttendanceData> {
+  const SAFETY_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${process.env.NEXT_PUBLIC_SAFETY_ATTENDANCE_CSV_ID}/pub?gid=${gid}&single=true&output=csv`;
+  const response2 = await fetch(SAFETY_CSV_URL, {
+    next: { revalidate: 0 },
+  });
+
+  const csvData = await response2.text();
+
+  const { data } = Papa.parse(csvData, {
+    header: true,
+    skipEmptyLines: true,
+    dynamicTyping: true,
+  });
+
+  // Assert type for data rows
+  const typedData = data as Array<Record<string, number>>;
+  function convertAttendanceData(
+    rawData: Array<Record<string, number>>
+  ): SafetyAttendanceData {
+    const summary: SafetyAttendanceSummary = {
+      totalEmployees: 16,
+      totalWorkdays: rawData[21]["_44"],
+      totalLeaves: rawData[19]["_44"],
+      totalPresents: rawData[19]["_45"],
+    };
+    const employees = [];
+    for (let i = 3; i < 19; i++) {
+      const row = rawData[i];
+      if (!row[""]) {
+        continue;
+      }
+      const attendance = [];
+      for (let i = 7; i <= 37; i++) {
+        const dayKey = `_${i}`;
+        const value = row[dayKey];
+        if (!value) {
+          continue;
+        }
+        attendance.push(String(value));
+      }
+      const oneEmployee = {
+        slNo: Number(row[""]),
+        name: String(row["_1"]),
+        designation: String(row["_3"]),
+        mobile: String(row["_4"]),
+        plant: String(row["_5"]),
+        doj: String(row["_6"]),
+        attendance: attendance,
+        workdays: Number(row["_38"]),
+        leaves: Number(row["_43"]),
+        weeklyOff: Number(row["_40"]),
+        NationalHolidays: Number(row["_39"]),
+        PaidLeaves: Number(row["_44"]),
+        TotalDaysForPayment: Number(row["_45"]),
+      };
+      employees.push(oneEmployee);
+    }
+
+    return {
+      summary: summary,
+      employees: employees,
+    };
+  }
+  const formatedData: SafetyAttendanceData = convertAttendanceData(typedData);
+
+  return formatedData;
+}
+
 export async function fetchGoogleSheetDataRego(
   gid: string | null,
   type: string | null,
   Month?: string | null
 ): Promise<Rego> {
   if (!Month) {
-    Month = (new Date().toLocaleString("default", { month: "long" })).toUpperCase();
+    Month = new Date()
+      .toLocaleString("default", { month: "long" })
+      .toUpperCase();
   }
-  const regodatafiltered = regodata.filter(
-    (row) => row.month === Month 
-  );
+  const regodatafiltered = regodata.filter((row) => row.month === Month);
   if (regodatafiltered.length === 0) {
     throw new Error(`No data found for month: ${Month}`);
   }
-  // console.log("Rego Data for month:",regodatafiltered[0].month," data:", regodatafiltered[0].csvId);
   const SAFETY_CSV_URL = `https://docs.google.com/spreadsheets/d/e/${regodatafiltered[0].csvId}/pub?gid=${regodatafiltered[0].gid}&single=true&output=csv`;
   const response2 = await fetch(SAFETY_CSV_URL, {
     next: { revalidate: 0 },
@@ -177,8 +248,6 @@ export async function fetchGoogleSheetDataRego(
   // Assert type for data rows
   const typedData = data as Array<Record<string, number>>;
   const totalLength = typedData.length;
-
-  // console.log(totalLength - 1);
   function timeStringToHours(time: string | undefined): number {
     if (!time) return 0;
     const [hours, minutes] = time.split(":").map(Number);
@@ -208,20 +277,19 @@ export async function fetchGoogleSheetDataRego(
   };
   if (type !== "all") {
     regosummary.TotalKM = 0;
-        regosummary.TotalExtraKM = 0;
-        regosummary.TotalExtraHour = 0;
-        regosummary.TotalExtraBill = 0;
+    regosummary.TotalExtraKM = 0;
+    regosummary.TotalExtraHour = 0;
+    regosummary.TotalExtraBill = 0;
     for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
       const row = typedData[i];
-      
+
       if (String(row["Type"]) === type) {
-        
-        regosummary.TotalKM +=row["Total Running Kms"] || 0;
+        regosummary.TotalKM += row["Total Running Kms"] || 0;
         regosummary.TotalExtraBill +=
           extractNumber(
             String(row["Total Rented \n+ Extra KMs \n+ Extra HRs"])
           ) || 0;
-        regosummary.TotalExtraKM +=row["EXTRA KMS"] || 0;
+        regosummary.TotalExtraKM += row["EXTRA KMS"] || 0;
         regosummary.TotalExtraHour +=
           timeStringToHours(String(row["Extra Hours"])) || 0;
       }
