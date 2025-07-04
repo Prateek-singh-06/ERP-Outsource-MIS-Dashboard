@@ -10,6 +10,7 @@ import { Safety } from "@/lib/types";
 import Loading from "@/components/Loading";
 import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
 import { DropdownMenuDemo } from "./_components/monthDropDown";
+import AttendanceDashboard from "./_components/Attendance";
 // import Link from "next/link";
 
 export default function SafetyPage() {
@@ -28,6 +29,7 @@ export default function SafetyPage() {
         const response = await fetch(
           `/api/Saftey?param1=${encodeURIComponent(SafteyData[index].gid)}`
         );
+        
         if (!response) {
           throw new Error("failed to fetch the data");
         }
@@ -257,6 +259,9 @@ export default function SafetyPage() {
             <div className="lg:w-[58%] w-full lg:h-[500px] h-[500px]  rounded-xl border border-gray-200 bg-white shadow-sm lg:mb-0 mb-10">
               <SafetyBarChart data={safety.Plant} />
             </div>
+          </div>
+          <div>
+            <AttendanceDashboard selectedMonth={selectedMonth} />
           </div>
         </div>
       ) : (

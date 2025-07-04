@@ -132,4 +132,36 @@ export interface Rego {
   BarData: RegoBarData[];
   Utilization:VehicleUtilization[];
 }
+// Interface for attendance summary
+export interface SafetyAttendanceSummary {
+  totalEmployees: number;
+  totalWorkdays: number;
+  totalLeaves: number;
+  totalPresents: number;
+}
+
+// Interface for individual employee attendance record
+export interface SafetyEmployeeAttendance {
+  slNo: number;
+  name: string;
+  employeeId?: string;
+  designation: string;
+  mobile: string | number | null;
+  plant: string;
+  doj: string;
+  attendance: string[];
+  workdays: number;
+  leaves: number;
+  weeklyOff: number;
+  NationalHolidays: number;
+  PaidLeaves: number;
+  TotalDaysForPayment: number;
+}
+
+// Complete attendance data structure
+export interface SafetyAttendanceData {
+  summary: SafetyAttendanceSummary;
+  employees: SafetyEmployeeAttendance[];
+}
+
 
