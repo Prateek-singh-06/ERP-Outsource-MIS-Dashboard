@@ -88,7 +88,7 @@ export default function EmployeeDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[1100px] max-w-non !max-w-[95vw]">
+      <DialogContent className=" w-[1100px] !max-w-[90vw]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-purple-800">
             {employee ? employee.name : "Employee Details"}
@@ -191,7 +191,7 @@ export default function EmployeeDialog({
                         key={idx}
                         className="group relative flex flex-col items-center justify-between px-3 py-1 sm:p-4 
              border border-gray-200/60 rounded-2xl bg-white/80 backdrop-blur-sm
-             min-h-[90px] shadow-sm hover:shadow-lg hover:shadow-blue-100/50
+             min-h-[56px] shadow-sm hover:shadow-lg hover:shadow-blue-100/50
              transition-all duration-300 ease-out hover:scale-105 hover:border-blue-200/80
              cursor-pointer overflow-hidden"
                       >

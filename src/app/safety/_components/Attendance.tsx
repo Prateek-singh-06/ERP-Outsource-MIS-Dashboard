@@ -115,6 +115,16 @@ export default function AttendanceDashboard({
     );
     setFilteredEmployees(filtereddata);
   }, [SelectedDesignation, SelectedPlant, SearchQuery, data]);
+  function getMonthNumber(monthYear: string): number | undefined {
+  // Example input: "JULY 2025"
+  const [monthStr] = monthYear.trim().split(" ");
+  const months = [
+    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+    "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+  ];
+  const idx = months.indexOf(monthStr.toUpperCase());
+  return idx !== -1 ? idx + 1 : undefined;
+}
 
   return (
     <>
@@ -282,6 +292,7 @@ export default function AttendanceDashboard({
             open={dialogOpen}
             onOpenChange={setDialogOpen}
             employee={selectedEmployee}
+            month={getMonthNumber(selectedMonth)}
           />
         </div>
       ) : (

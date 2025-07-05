@@ -266,7 +266,7 @@ const gid = selected?.gid || "";
               <PieChartCard data={rego.PieData} />
             </div>
             <div className="flex lg:flex-row flex-col gap-6 my-6 lg:w-[60%] w-full h-auto">
-              <StackedBarChart data={rego.BarData} />
+              <StackedBarChart data={rego.BarData} type={Type} />
             </div>
           </div>
           <div>
