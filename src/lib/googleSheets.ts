@@ -171,14 +171,19 @@ export async function fetchGoogleSheetDataSafteyAttendance(
   ): SafetyAttendanceData {
     const summary: SafetyAttendanceSummary = {
       totalEmployees: 16,
-      totalWorkdays: rawData[21]["_44"],
-      totalLeaves: rawData[19]["_44"],
+      totalWorkdays: rawData[19]["_38"],
+      totalLeaves: rawData[19]["_43"],
       totalPresents: rawData[19]["_45"],
+      paidLeaves:rawData[19]["_44"],
+      weeklyOff:rawData[19]["_40"],
+      Holidays:rawData[19]["_39"]
     };
+    console.log(summary);
     const employees = [];
     for (let i = 3; i < 19; i++) {
       const row = rawData[i];
       if (!row[""]) {
+        summary.totalEmployees=i-3;
         continue;
       }
       const attendance = [];

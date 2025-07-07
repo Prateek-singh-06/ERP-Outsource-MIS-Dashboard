@@ -138,6 +138,9 @@ export interface SafetyAttendanceSummary {
   totalWorkdays: number;
   totalLeaves: number;
   totalPresents: number;
+  paidLeaves?:number;
+  weeklyOff?:number;
+  Holidays?:number;
 }
 
 // Interface for individual employee attendance record

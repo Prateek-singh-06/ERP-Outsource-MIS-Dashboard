@@ -7,8 +7,8 @@ import RegoData from "@/data/RegoBilling.json";
 import { Rego } from "@/lib/types";
 import Loading from "@/components/Loading";
 // import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
-import PieChartCard from "./_components/pieChartCard";
-import StackedBarChart from "./_components/StackedBarChart";
+// import PieChartCard from "./_components/pieChartCard";
+// import StackedBarChart from "./_components/StackedBarChart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -261,14 +261,14 @@ const gid = selected?.gid || "";
               />
             </Link>
           </div>
-          <div className="flex lg:flex-row flex-col gap-6">
+          {/* <div className="flex lg:flex-row flex-col gap-6">
             <div className="flex lg:flex-row flex-col gap-6 my-6 lg:w-[40%] w-full h-auto">
               <PieChartCard data={rego.PieData} />
             </div>
             <div className="flex lg:flex-row flex-col gap-6 my-6 lg:w-[60%] w-full h-auto">
               <StackedBarChart data={rego.BarData} type={Type} />
             </div>
-          </div>
+          </div> */}
           <div>
             <VehicleUtilizationChart UtilizationData={rego.Utilization} type={Type}/>
           </div>
