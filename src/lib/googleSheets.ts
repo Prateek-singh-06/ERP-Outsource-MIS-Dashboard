@@ -253,6 +253,7 @@ export async function fetchGoogleSheetDataRego(
   // Assert type for data rows
   const typedData = data as Array<Record<string, number>>;
   const totalLength = typedData.length;
+  // let totalSelectedVehicleLength=Math.min(35, totalLength - 1);
   function timeStringToHours(time: string | undefined): number {
     if (!time) return 0;
     const [hours, minutes] = time.split(":").map(Number);
@@ -279,16 +280,24 @@ export async function fetchGoogleSheetDataRego(
         ]
       )
     ),
+    AverageKMPerVehiclePerDay:0,
+    AverageExtraKMPerVehiclePerDay:0,
+    AverageExtraHourPerVehiclePerDay:0,
+    AverageBillPerVehicalPerDay:0,
+    TotalDays:typedData[Math.min(35, totalLength - 1)]["Running days"]
   };
   if (type !== "all") {
     regosummary.TotalKM = 0;
     regosummary.TotalExtraKM = 0;
     regosummary.TotalExtraHour = 0;
     regosummary.TotalExtraBill = 0;
+    // totalSelectedVehicleLength=0
+    regosummary.TotalDays=0;
     for (let i = 0; i < Math.min(35, totalLength - 1); i++) {
       const row = typedData[i];
-
+      
       if (String(row["Type"]) === type) {
+        // totalSelectedVehicleLength++;
         regosummary.TotalKM += row["Total Running Kms"] || 0;
         regosummary.TotalExtraBill +=
           extractNumber(
@@ -297,9 +306,14 @@ export async function fetchGoogleSheetDataRego(
         regosummary.TotalExtraKM += row["EXTRA KMS"] || 0;
         regosummary.TotalExtraHour +=
           timeStringToHours(String(row["Extra Hours"])) || 0;
+        regosummary.TotalDays+=row["Running days"]||0;
       }
     }
   }
+  regosummary.AverageKMPerVehiclePerDay = regosummary.TotalKM  / (regosummary.TotalDays ?? 1);
+  regosummary.AverageExtraKMPerVehiclePerDay=regosummary.TotalExtraKM / (regosummary.TotalDays ?? 1);
+  regosummary.AverageExtraHourPerVehiclePerDay=regosummary.TotalExtraHour/(regosummary.TotalDays ?? 1);
+  regosummary.AverageBillPerVehicalPerDay=regosummary.TotalExtraBill/(regosummary.TotalDays ?? 1);
 
   const RegoPieData: RegoPieData[] = [];
   const BaseRent = {
@@ -358,6 +372,8 @@ export async function fetchGoogleSheetDataRego(
   RegoBarData.sort(
     (a, b) => (b["Total Extra Charges"] || 0) - (a["Total Extra Charges"] || 0)
   );
+  // console.log(regosummary);
+  // console.log(totalSelectedVehicleLength)
   const Rego: Rego = {
     Summary: regosummary,
     PieData: RegoPieData,

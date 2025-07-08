@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import VehicleUtilizationChart from "./_components/Utilization";
+import MonthWiseBill from "./_components/Monthwisebill";
 export default function RegoPage() {
   const [rego, setRego] = useState<Rego | null>(null);
   const [month, setMonth] = useState<string>("MAY");
@@ -122,10 +123,81 @@ export default function RegoPage() {
         />
       </svg>
     ),
+    "Average KM": (
+      // Calculator/Average icon
+      <svg
+        className="h-5 w-5 text-blue-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth={2} />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8 8h8M8 12h8M8 16h4"
+        />
+      </svg>
+    ),
+    "Average Extra KM": (
+      // Trending up icon for average
+      <svg
+        className="h-5 w-5 text-red-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+        />
+      </svg>
+    ),
+    "Average Extra Hour": (
+      // Bar chart icon for average
+      <svg
+        className="h-5 w-5 text-yellow-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+        />
+      </svg>
+    ),
+    "Average Bill": (
+      // Pie chart icon for average
+      <svg
+        className="h-5 w-5 text-purple-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+        />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+        />
+      </svg>
+    ),
   };
-const selected = RegoData.find((item) => item.month === month);
-const liveId = selected?.liveId || "";
-const gid = selected?.gid || "";
+  const selected = RegoData.find((item) => item.month === month);
+  const liveId = selected?.liveId || "";
+  const gid = selected?.gid || "";
   return (
     <>
       {rego ? (
@@ -134,7 +206,7 @@ const gid = selected?.gid || "";
           <div className="flex flex-col md:flex-row items-center justify-between mb-0">
             <div className="flex items-center justify-between w-full md:w-auto">
               <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black mr-5">
-                REGO DASHBOARD
+                REGO ETS DASHBOARD
               </h1>
               <div className="ml-5">
                 <Select value={month} onValueChange={setMonth}>
@@ -155,38 +227,38 @@ const gid = selected?.gid || "";
             </div>
             <div>
               <Tabs defaultValue={Type} className="w-auto h-auto">
-                <TabsList className="py-[20px]">
+                <TabsList className="py-[20px] ">
                   <TabsTrigger
                     value="all"
-                    className="text-[16px] px-3 py-4 cursor-pointer"
+                    className="text-[16px] font-bold px-3 py-4 cursor-pointer"
                     onClick={() => setType("all")}
                   >
                     OVERALL
                   </TabsTrigger>
                   <TabsTrigger
                     value="BOLERO"
-                    className="text-[16px] px-3 py-4  cursor-pointer"
+                    className="text-[16px] px-3 py-4  cursor-pointer  font-bold"
                     onClick={() => setType("BOLERO")}
                   >
                     BOLERO
                   </TabsTrigger>
                   <TabsTrigger
                     value="BUS"
-                    className="text-[16px] px-3 py-4 cursor-pointer"
+                    className="text-[16px] px-3 py-4 cursor-pointer  font-bold"
                     onClick={() => setType("BUS")}
                   >
                     BUS
                   </TabsTrigger>
                   <TabsTrigger
                     value="TRAVELLER"
-                    className="text-[16px] px-3 py-4 cursor-pointer"
+                    className="text-[16px] px-3 py-4 cursor-pointer  font-bold"
                     onClick={() => setType("TRAVELLER")}
                   >
                     TRAVELLER
                   </TabsTrigger>
                   <TabsTrigger
                     value="WINGER"
-                    className="text-[16px] px-3 py-4 cursor-pointer"
+                    className="text-[16px] px-3 py-4 cursor-pointer  font-bold"
                     onClick={() => setType("WINGER")}
                   >
                     WINGER
@@ -204,7 +276,7 @@ const gid = selected?.gid || "";
               <DataCard
                 title="Total KM"
                 type="km"
-                value={rego.Summary.TotalKM}
+                value={rego.Summary.TotalKM.toLocaleString('en-IN')}
                 subtitle="Total KM driven"
                 icon={icons["Total KM"]}
                 hoverEffect="blue"
@@ -220,10 +292,10 @@ const gid = selected?.gid || "";
             >
               <DataCard
                 title="Total Extra KM"
-                value={rego.Summary.TotalExtraKM}
+                value={rego.Summary.TotalExtraKM.toLocaleString('en-IN')}
                 type="km"
                 subtitle="Total Extra KM driven"
-                icon={icons["Total Extra KM"]}
+                icon={icons["Total KM"]}
                 hoverEffect="red"
                 className="bg-white hover:bg-red-50 focus:ring-red-500"
               />
@@ -237,7 +309,7 @@ const gid = selected?.gid || "";
               <DataCard
                 title="Total Extra Hour"
                 type="hour"
-                value={Math.round(rego.Summary.TotalExtraHour * 10) / 10}
+                value={(Math.round(rego.Summary.TotalExtraHour * 10) / 10).toLocaleString('en-IN')}
                 subtitle="Total Extra Hour driven"
                 icon={icons["Total Extra Hour"]}
                 hoverEffect="yellow"
@@ -253,9 +325,87 @@ const gid = selected?.gid || "";
               <DataCard
                 title="Total Bill"
                 type="rupee"
-                value={Math.round(rego.Summary.TotalExtraBill)}
+                value={Math.round(rego.Summary.TotalExtraBill).toLocaleString('en-IN')}
                 subtitle="Total extra bill incurred "
                 icon={icons["Total Extra Bill"]}
+                hoverEffect="purple"
+                className="bg-white hover:bg-green-50 focus:ring-green-500"
+              />
+            </Link>
+            <Link
+              href={`https://docs.google.com/spreadsheets/d/${liveId}/edit?gid=${gid}#gid=${gid}`}
+              className="no-underline h-full"
+              target="_blank"
+            >
+              <DataCard
+                title="Average KM"
+                type="km"
+                value={
+                  (Math.round(
+                    (rego.Summary.AverageKMPerVehiclePerDay ?? 0) * 10
+                  ) / 10).toLocaleString('en-IN')
+                }
+                subtitle="Average KM per vehicle per day"
+                icon={icons["Average KM"]}
+                hoverEffect="blue"
+                className="bg-white hover:bg-blue-50 focus:ring-blue-500"
+              />
+            </Link>
+
+            {/* Total Extra KM Card - Speed Icon */}
+            <Link
+              href={`https://docs.google.com/spreadsheets/d/${liveId}/edit?gid=${gid}#gid=${gid}`}
+              className="no-underline h-full"
+              target="_blank"
+            >
+              <DataCard
+                title="Average Extra KM"
+                value={
+                  (Math.round(
+                    (rego.Summary.AverageExtraKMPerVehiclePerDay ?? 0) * 10
+                  ) / 10).toLocaleString('en-IN')
+                }
+                type="km"
+                subtitle="Average Extra KM per vehicle per day"
+                icon={icons["Average Extra KM"]}
+                hoverEffect="red"
+                className="bg-white hover:bg-red-50 focus:ring-red-500"
+              />
+            </Link>
+            {/* Total Extra Hour Card - Clock Icon */}
+            <Link
+              href={`https://docs.google.com/spreadsheets/d/${liveId}/edit?gid=${gid}#gid=${gid}`}
+              className="no-underline h-full"
+              target="_blank"
+            >
+              <DataCard
+                title="Average Extra Hour"
+                type="hour"
+                value={
+                  (Math.round(
+                    (rego.Summary.AverageExtraHourPerVehiclePerDay ?? 0) * 100
+                  ) / 100).toLocaleString('en-IN')
+                }
+                subtitle="Average Extra Hour per vehicle per day "
+                icon={icons["Average Extra Hour"]}
+                hoverEffect="yellow"
+                className="bg-white hover:bg-green-50 focus:ring-green-500"
+              />
+            </Link>
+            {/* Total Extra Bill Card - Rupee Icon */}
+            <Link
+              href={`https://docs.google.com/spreadsheets/d/${liveId}/edit?gid=${gid}#gid=${gid}`}
+              className="no-underline h-full"
+              target="_blank"
+            >
+              <DataCard
+                title="Average Bill"
+                type="rupee"
+                value={Math.round(
+                  rego.Summary.AverageBillPerVehicalPerDay ?? 0
+                ).toLocaleString('en-IN')}
+                subtitle="Average bill per vehicle per day "
+                icon={icons["Average Bill"]}
                 hoverEffect="purple"
                 className="bg-white hover:bg-green-50 focus:ring-green-500"
               />
@@ -270,7 +420,13 @@ const gid = selected?.gid || "";
             </div>
           </div> */}
           <div>
-            <VehicleUtilizationChart UtilizationData={rego.Utilization} type={Type}/>
+            <VehicleUtilizationChart
+              UtilizationData={rego.Utilization}
+              type={Type}
+            />
+          </div>
+          <div className="w-full h-auto mb-10 ">
+            <MonthWiseBill  />
           </div>
         </div>
       ) : (

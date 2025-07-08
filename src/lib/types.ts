@@ -110,6 +110,13 @@ export interface RegoSummary {
   TotalExtraKM: number;
   TotalExtraHour: number;
   TotalExtraBill: number;
+  AverageKMPerVehiclePerDay?:number;
+  AverageExtraKMPerVehiclePerDay?:number;
+  AverageExtraHourPerVehiclePerDay?:number;
+  AverageBillPerVehicalPerDay?:number;
+  TotalDays?:number;
+
+
 }
 
 export interface RegoPieData {

@@ -28,7 +28,7 @@ const VehicleUtilizationChart = ({
 
   // Custom color function based on utilization percentage
   const getBarColor = (utilization: number) => {
-    if (utilization >= 150) return "#dc2626";
+    if (utilization >= 150) return "#7f1d1d";
     if (utilization >= 100) return "#f87171";
     if (utilization >= 80) return "#16a34a";
     return "#FFBF00";
@@ -278,7 +278,7 @@ const VehicleUtilizationChart = ({
           <span className="text-gray-600">High (100-150%)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-red-600 rounded"></div>
+          <div className="w-4 h-4 bg-red-900 rounded"></div>
           <span className="text-gray-600">Critical (&gt;150%)</span>
         </div>
       </div>
