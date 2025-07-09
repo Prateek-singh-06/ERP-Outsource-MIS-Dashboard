@@ -1,0 +1,26 @@
+[
+    {
+        "MONTH":"APRIL 2025",
+        "all":153,
+        "BOLERO":230,
+        "BUS":134,
+        "TRAVELLER":71,
+        "WINGER":73
+    },
+    {
+        "MONTH":"MAY 2025",
+        "all":129,
+        "BOLERO":141,
+        "BUS":147,
+        "TRAVELLER":75,
+        "WINGER":129
+    },
+    {
+        "MONTH":"JUNE 2025",
+        "all":104,
+        "BOLERO":115,
+        "BUS":120,
+        "TRAVELLER":87,
+        "WINGER":95
+    }
+]

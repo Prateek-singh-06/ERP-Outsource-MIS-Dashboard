@@ -21,10 +21,11 @@ import {
 } from "@/components/ui/select";
 import VehicleUtilizationChart from "./_components/Utilization";
 import MonthWiseBill from "./_components/Monthwisebill";
+type VehicleType = 'all' | 'BOLERO' | 'BUS' | 'TRAVELLER' | 'WINGER';
 export default function RegoPage() {
   const [rego, setRego] = useState<Rego | null>(null);
-  const [month, setMonth] = useState<string>("MAY");
-  const [Type, setType] = useState<string>("all");
+  const [month, setMonth] = useState<string>("MAY 2025");
+  const [Type, setType] = useState<VehicleType>("all");
 
   useEffect(() => {
     async function fetchTheData() {
@@ -208,8 +209,8 @@ export default function RegoPage() {
               <h1 className="text-xl md:text-2xl pt-4 font-bold mb-5 text-black mr-5">
                 REGO ETS DASHBOARD
               </h1>
-              <div className="ml-5">
-                <Select value={month} onValueChange={setMonth}>
+              <div className="ml-5 text-[16px] font-bold">
+                <Select value={month} onValueChange={setMonth} >
                   <SelectTrigger className="w-[160px]">
                     <SelectValue placeholder="Select a Month" />
                   </SelectTrigger>
@@ -217,9 +218,9 @@ export default function RegoPage() {
                     <SelectGroup>
                       <SelectLabel>Months</SelectLabel>
                       {/* <SelectItem value="OVERALL">OVERALL</SelectItem>  */}
-                      <SelectItem value="APRIL">APRIL</SelectItem>
-                      <SelectItem value="MAY">MAY</SelectItem>
-                      <SelectItem value="JUNE">JUNE</SelectItem>
+                      <SelectItem value="APRIL 2025" >APRIL</SelectItem>
+                      <SelectItem value="MAY 2025" >MAY</SelectItem>
+                      <SelectItem value="JUNE 2025" >JUNE</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -426,7 +427,7 @@ export default function RegoPage() {
             />
           </div>
           <div className="w-full h-auto mb-10 ">
-            <MonthWiseBill  />
+            <MonthWiseBill type={Type}  />
           </div>
         </div>
       ) : (

@@ -254,12 +254,12 @@ export async function fetchGoogleSheetDataRego(
   const typedData = data as Array<Record<string, number>>;
   const totalLength = typedData.length;
   // let totalSelectedVehicleLength=Math.min(35, totalLength - 1);
-  function timeStringToHours(time: string | undefined): number {
-    if (!time) return 0;
-    const [hours, minutes] = time.split(":").map(Number);
-    if (isNaN(hours) || isNaN(minutes)) return 0;
-    return hours + minutes / 60;
-  }
+  // function timeStringToHours(time: string | undefined): number {
+  //   if (!time) return 0;
+  //   const [hours, minutes] = time.split(":").map(Number);
+  //   if (isNaN(hours) || isNaN(minutes)) return 0;
+  //   return hours + minutes / 60;
+  // }
   function extractNumber(value: string | undefined): number {
     if (!value) return 0;
     // Remove all non-digit and non-decimal characters
@@ -268,15 +268,15 @@ export async function fetchGoogleSheetDataRego(
   }
 
   const regosummary: RegoSummary = {
-    TotalKM: typedData[Math.min(35, totalLength - 1)]["Total Running Kms"],
-    TotalExtraKM: typedData[Math.min(35, totalLength - 1)]["EXTRA KMS"],
-    TotalExtraHour: timeStringToHours(
-      String(typedData[Math.min(35, totalLength - 1)]["Extra Hours"])
+    TotalKM: typedData[Math.min(35, totalLength - 1)]["Total Running Kms as per REGO"],
+    TotalExtraKM: typedData[Math.min(35, totalLength - 1)]["EXTRA KMS REGO"],
+    TotalExtraHour: extractNumber(
+      String(typedData[Math.min(35, totalLength - 1)]["Billed Extra Hours"])
     ),
     TotalExtraBill: extractNumber(
       String(
         typedData[Math.min(35, totalLength - 1)][
-          "Total Rented \n+ Extra KMs \n+ Extra HRs"
+          "Bill By Rego"
         ]
       )
     ),
@@ -298,14 +298,14 @@ export async function fetchGoogleSheetDataRego(
       
       if (String(row["Type"]) === type) {
         // totalSelectedVehicleLength++;
-        regosummary.TotalKM += row["Total Running Kms"] || 0;
+        regosummary.TotalKM += row["Total Running Kms as per REGO"] || 0;
         regosummary.TotalExtraBill +=
           extractNumber(
-            String(row["Total Rented \n+ Extra KMs \n+ Extra HRs"])
+            String(row["Bill By Rego"])
           ) || 0;
-        regosummary.TotalExtraKM += row["EXTRA KMS"] || 0;
+        regosummary.TotalExtraKM += row["EXTRA KMS REGO"] || 0;
         regosummary.TotalExtraHour +=
-          timeStringToHours(String(row["Extra Hours"])) || 0;
+        extractNumber(String(row["Billed Extra Hours"])) || 0;
         regosummary.TotalDays+=row["Running days"]||0;
       }
     }
@@ -366,7 +366,7 @@ export async function fetchGoogleSheetDataRego(
         oneRegoVehicle["Extra KM Charges"] +
         oneRegoVehicle["Extra hour Charges"];
       RegoBarData.push(oneRegoVehicle);
-      // typedData[i]['Total Rented \n+ Extra KMs \n+ Extra HRs'] || 0
+      // typedData[i]['Bill By Rego'] || 0
     }
   }
   RegoBarData.sort(

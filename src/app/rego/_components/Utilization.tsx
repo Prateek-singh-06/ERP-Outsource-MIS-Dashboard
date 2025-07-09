@@ -229,14 +229,16 @@ const VehicleUtilizationChart = ({
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis
               dataKey="vehicleShort"
-              tick={{ fontSize: 10, fill: "#6b7280" }}
+              // tick={{ fontSize: 10, fill: "#6b7280" }}
+              tick={{ fontSize: 14, fill: '#374151',fontWeight: 'bold' }}
               axisLine={{ stroke: "#d1d5db" }}
               angle={-45}
               textAnchor="end"
               //   height={80}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: "#6b7280" }}
+              // tick={{ fontSize: 12, fill: "#6b7280" }}
+              tick={{ fontSize: 18, fill: '#374151',fontWeight: 'bold' }}
               axisLine={{ stroke: "#d1d5db" }}
               label={{
                 value: "Utilization %",
