@@ -92,16 +92,16 @@ export interface Plant {
   NoSeverity: number;
   Total: number;
 }
-export interface SeverityLevelWise{
-  LOW:number;
-  MEDIUM:number;
-  HIGH:number;
-  "NO SEVERITY":number;
+export interface SeverityLevelWise {
+  LOW: number;
+  MEDIUM: number;
+  HIGH: number;
+  "NO SEVERITY": number;
 }
-export interface Safety{
-  Summary:SafetySummary;
-  Plant:Plant[];
-  SeverityLevelWise:SeverityLevelWise;
+export interface Safety {
+  Summary: SafetySummary;
+  Plant: Plant[];
+  SeverityLevelWise: SeverityLevelWise;
   Time: number;
 }
 
@@ -110,13 +110,11 @@ export interface RegoSummary {
   TotalExtraKM: number;
   TotalExtraHour: number;
   TotalExtraBill: number;
-  AverageKMPerVehiclePerDay?:number;
-  AverageExtraKMPerVehiclePerDay?:number;
-  AverageExtraHourPerVehiclePerDay?:number;
-  AverageBillPerVehicalPerDay?:number;
-  TotalDays?:number;
-
-
+  AverageKMPerVehiclePerDay?: number;
+  AverageExtraKMPerVehiclePerDay?: number;
+  AverageExtraHourPerVehiclePerDay?: number;
+  AverageBillPerVehicalPerDay?: number;
+  TotalDays?: number;
 }
 
 export interface RegoPieData {
@@ -137,7 +135,7 @@ export interface Rego {
   Summary: RegoSummary;
   PieData: RegoPieData[];
   BarData: RegoBarData[];
-  Utilization:VehicleUtilization[];
+  Utilization: VehicleUtilization[];
 }
 // Interface for attendance summary
 export interface SafetyAttendanceSummary {
@@ -145,9 +143,9 @@ export interface SafetyAttendanceSummary {
   totalWorkdays: number;
   totalLeaves: number;
   totalPresents: number;
-  paidLeaves?:number;
-  weeklyOff?:number;
-  Holidays?:number;
+  paidLeaves?: number;
+  weeklyOff?: number;
+  Holidays?: number;
 }
 
 // Interface for individual employee attendance record
@@ -173,5 +171,13 @@ export interface SafetyAttendanceData {
   summary: SafetyAttendanceSummary;
   employees: SafetyEmployeeAttendance[];
 }
-
+export interface RegoFinancialData {
+  month: string;
+  vendorClaimed: number;
+  calculated: number;
+  deductions: number;
+  hold: number;
+  paid: number;
+  status: string;
+}
 
