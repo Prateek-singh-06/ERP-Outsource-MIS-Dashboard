@@ -1,5 +1,5 @@
 import FinancialDashboard from "@/components/FinancialDashboard";
-import Footer from "@/components/Footer";
+
 
 export default function FinancePage() {
   const statusesForERP = [

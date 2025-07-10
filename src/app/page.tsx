@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Footer from "@/components/Footer";
 import Loader from "@/components/Loading";
 import DashboardSection from "@/components/DashboardSection";
 
