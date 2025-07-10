@@ -35,7 +35,7 @@ export default function FinancePage() {
         {renderHeadingTabs()}
         <FinancialDashboard />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

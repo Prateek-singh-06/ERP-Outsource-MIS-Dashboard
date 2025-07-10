@@ -127,7 +127,7 @@ export default function FinancePage() {
 ))}
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

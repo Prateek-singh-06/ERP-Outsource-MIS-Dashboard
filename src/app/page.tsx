@@ -127,7 +127,7 @@ export default function Home() {
           outsourcingProgress={outsourcingProgress}
         />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
