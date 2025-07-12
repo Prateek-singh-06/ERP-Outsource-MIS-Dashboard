@@ -5,7 +5,7 @@ type StatusColorKey = "green" | "red" | "yellow" | "blue" | "purple" | "orange";
 type RegoFinancialCardProps = {
   title: string;
   amount: number|undefined;
-  month: string|undefined;
+  month?: string|undefined;
   statusColor?: "green" | "red" | "yellow" | "blue" | "purple" | "orange";
   icon?: IconKey;
   gradientFrom?: string;
@@ -15,7 +15,6 @@ type RegoFinancialCardProps = {
 const RegoFinancialCard = ({
   title,
   amount,
-  month,
   statusColor,
   icon,
   gradientFrom ,
@@ -221,7 +220,7 @@ const RegoFinancialCard = ({
           {/* Main content - Amount and details */}
           <div className="flex items-center justify-between">
             <div className="flex-1">
-              <div className="text-2xl font-black text-gray-800 mb-2 tracking-tight">
+              <div className="text-xl font-black text-gray-800 mb-2 tracking-tight">
                 ₹ {amount?.toLocaleString("en-IN")}
               </div>
               <div className="text-sm text-gray-500 font-medium uppercase tracking-wider">
@@ -229,7 +228,7 @@ const RegoFinancialCard = ({
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 ml-8">
+            {/* <div className="flex items-center space-x-4 ml-8">
               <div
                 className={`text-center p-3 bg-gradient-to-br ${fromColor.bg} rounded-xl`}
               >
@@ -238,11 +237,11 @@ const RegoFinancialCard = ({
                 >
                   {month}
                 </div>
-                {/* <div className={`text-sm font-bold ${fromColor.textColor}`}>
+                <div className={`text-sm font-bold ${fromColor.textColor}`}>
                   Period
-                </div> */}
+                </div>
               </div>
-              {/* <div
+              <div
                 className={`text-center p-3 bg-gradient-to-br ${toColor.bg} rounded-xl`}
               >
                 <div
@@ -253,8 +252,8 @@ const RegoFinancialCard = ({
                 <div className={`text-sm font-bold ${toColor.textColor}`}>
                   {status}
                 </div>
-              </div> */}
-            </div>
+              </div>
+            </div> */}
           </div>
 
           {/* Bottom accent */}
