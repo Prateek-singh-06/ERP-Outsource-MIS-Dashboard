@@ -1,10 +1,10 @@
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   BarChart,
   Bar,
@@ -54,19 +54,28 @@ import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
 
 export default function RegoFinancialSection() {
   // const [selectedStatus, setSelectedStatus] = useState("All Payments");
-  // const [FinancialsMonth, setFinancialsMonth] = useState("MARCH");
+  const [FinancialsMonth, setFinancialsMonth] = useState("OVERALL");
   const [FinancialData, setFinancialData] = useState<
     RegoFinancialData[] | null
   >(null);
-  // const [SelectedMonthData, setSelectedMonthData] = useState<
-  //   RegoFinancialData[] | undefined
-  // >();
-  const chartData = FinancialData?.map((item) => ({
-    name: item.month,
-    Paid: item.paid,
-    Hold: item.hold,
-    Deductions: item.deductions,
-  }));
+  const [FinancialDataBar, setFinancialDataBar] = useState<
+    RegoFinancialData[] | null
+  >(null);
+  const [SelectedMonthData, setSelectedMonthData] = useState<
+    RegoFinancialData[] | undefined
+  >();
+  const chartData = FinancialDataBar
+    ?.map((item) => {
+      if (item.month === "OVERALL") return undefined;
+      else
+        return {
+          name: item.month,
+          Paid: item.paid,
+          Hold: item.hold,
+          Deductions: item.deductions,
+        };
+    })
+    .filter((item) => item !== undefined);
 
   useEffect(() => {
     async function fetchTheData() {
@@ -82,7 +91,34 @@ export default function RegoFinancialSection() {
           throw new Error("failed to fetch the data");
         }
         const data = await response.json();
-        console.log(data);
+        setFinancialDataBar(data);
+        const Overalldata = {
+          month: "OVERALL",
+          vendorClaimed: data.reduce(
+            (total: number, item: RegoFinancialData) =>
+              total + item.vendorClaimed,
+            0
+          ),
+          calculated: data.reduce(
+            (total: number, item: RegoFinancialData) => total + item.calculated,
+            0
+          ),
+          deductions: data.reduce(
+            (total: number, item: RegoFinancialData) => total + item.deductions,
+            0
+          ),
+          hold: data.reduce(
+            (total: number, item: RegoFinancialData) => total + item.hold,
+            0
+          ),
+          paid: data.reduce(
+            (total: number, item: RegoFinancialData) => total + item.paid,
+            0
+          ),
+          status: "Hold",
+        };
+        // console.log(data);
+        data.push(Overalldata);
         setFinancialData(data);
       } catch (error) {
         console.log("Error", error);
@@ -94,11 +130,11 @@ export default function RegoFinancialSection() {
 
     return () => clearInterval(interval); // cleanup on unmount
   }, []);
-  // useEffect(() => {
-  //   const SelectedMonthDatalocal: RegoFinancialData[] | undefined =
-  //     FinancialData?.filter((item) => item.month === FinancialsMonth);
-  //   setSelectedMonthData(SelectedMonthDatalocal);
-  // }, [FinancialsMonth, FinancialData]);
+  useEffect(() => {
+    const SelectedMonthDatalocal: RegoFinancialData[] | undefined =
+      FinancialData?.filter((item) => item.month === FinancialsMonth);
+    setSelectedMonthData(SelectedMonthDatalocal);
+  }, [FinancialsMonth, FinancialData]);
 
   return (
     <>
@@ -109,7 +145,7 @@ export default function RegoFinancialSection() {
               Rego Financial Overview
             </h2>
             <div className="flex flex-wrap gap-2">
-              {/* <Select
+              <Select
                 value={FinancialsMonth}
                 onValueChange={setFinancialsMonth}
               >
@@ -124,9 +160,9 @@ export default function RegoFinancialSection() {
                       </SelectItem>
                     );
                   })}
-                  <SelectItem value="MAY 2025">Jan 2024 - Jul 2025</SelectItem>
+                  {/* <SelectItem value="MAY 2025">Jan 2024 - Jul 2025</SelectItem> */}
                 </SelectContent>
-              </Select> */}
+              </Select>
 
               {/* <Select onValueChange={setSelectedStatus}>
             <SelectTrigger className="w-[150px]">
@@ -160,12 +196,8 @@ export default function RegoFinancialSection() {
             >
               <RegoFinancialCard
                 title="Total Rego Billed"
-                amount={FinancialData.reduce(
-                  (total, item) => total + item.vendorClaimed,
-                  0
-                )}
+                amount={SelectedMonthData?.[0]?.vendorClaimed}
                 icon="vendor"
-                
               />
             </Link>
 
@@ -175,12 +207,8 @@ export default function RegoFinancialSection() {
             >
               <RegoFinancialCard
                 title="Total Deductions"
-                amount={FinancialData.reduce(
-                  (total, item) => total + item.deductions,
-                  0
-                )}
+                amount={SelectedMonthData?.[0]?.deductions}
                 icon="credit"
-                
               />
             </Link>
 
@@ -190,12 +218,8 @@ export default function RegoFinancialSection() {
             >
               <RegoFinancialCard
                 title="Total On Hold"
-                amount={FinancialData.reduce(
-                  (total, item) => total + item.hold,
-                  0
-                )}
+                amount={SelectedMonthData?.[0]?.hold}
                 icon="package"
-          
               />
             </Link>
 
@@ -205,12 +229,8 @@ export default function RegoFinancialSection() {
             >
               <RegoFinancialCard
                 title="Total RML Approved"
-                amount={FinancialData.reduce(
-                  (total, item) => total + item.calculated,
-                  0
-                )}
+                amount={SelectedMonthData?.[0]?.paid}
                 icon="payment"
-                
               />
             </Link>
             {/* <Card>
@@ -277,9 +297,9 @@ export default function RegoFinancialSection() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="min-w-full text-sm text-left">
+            <table className="min-w-full text-lg text-left">
               <thead className="bg-gray-100">
-                <tr>
+                <tr className="text-xl">
                   <th className="p-2 text-center">Month</th>
                   <th className="p-2 text-center">Rego Billed</th>
                   <th className="p-2 text-center">Deductions</th>
@@ -291,14 +311,27 @@ export default function RegoFinancialSection() {
               </thead>
               <tbody>
                 {FinancialData.map((item, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50">
-                    <td className="p-2 font-medium text-gray-700 text-center">
-                      {item.month}
+                  <tr
+                    key={index}
+                    className={`border-b hover:bg-gray-50 ${
+                      item.month === "OVERALL" ? "font-bold" : "font-medium"
+                    }`}
+                  >
+                    <td className="p-2  text-gray-700 text-center">
+                      {item.month !== "OVERALL" ? item.month : "TOTAL"}
                     </td>
-                    <td className="p-2 text-center">₹ {item.vendorClaimed.toLocaleString("en-IN")}</td>
-                    <td className="p-2 text-center">₹ {item.deductions.toLocaleString("en-IN")}</td>
-                    <td className="p-2 text-center">₹ {item.hold.toLocaleString("en-IN")}</td>
-                    <td className="p-2 text-center">₹ {item.paid.toLocaleString("en-IN")}</td>
+                    <td className="p-2 text-center">
+                      ₹ {item.vendorClaimed.toLocaleString("en-IN")}
+                    </td>
+                    <td className="p-2 text-center">
+                      ₹ {item.deductions.toLocaleString("en-IN")}
+                    </td>
+                    <td className="p-2 text-center">
+                      ₹ {item.hold.toLocaleString("en-IN")}
+                    </td>
+                    <td className="p-2 text-center">
+                      ₹ {item.paid.toLocaleString("en-IN")}
+                    </td>
                     {/* <td className="p-2">
                     <span className={`text-sm font-medium px-2 py-1 rounded-full ${item.status === "Paid" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>{item.status}</span>
                   </td>
