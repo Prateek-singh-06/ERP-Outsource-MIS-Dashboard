@@ -335,6 +335,7 @@ export async function fetchGoogleSheetDataRego(
       const VehicleUtilization = {
         Utilization: extractNumber(String(row["UTILIZATION % "])),
         Vehicle: String(row["Vehicle No"]),
+        type: String(row["Type"]) as "BOLERO" | "BUS" | "TRAVELLER" | "WINGER",
       };
       UtilizationData.push(VehicleUtilization);
       BaseRent.value += extractNumber(String(row["Actual Rent"])) || 0;

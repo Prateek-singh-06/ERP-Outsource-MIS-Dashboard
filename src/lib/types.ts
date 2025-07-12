@@ -130,6 +130,7 @@ export interface RegoBarData {
 export interface VehicleUtilization {
   Utilization: number;
   Vehicle: string;
+  type?: "BOLERO" | "BUS" | "TRAVELLER" | "WINGER" ;
 }
 export interface Rego {
   Summary: RegoSummary;

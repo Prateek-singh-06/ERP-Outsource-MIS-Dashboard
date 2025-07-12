@@ -24,6 +24,7 @@ const VehicleUtilizationChart = ({
     vehicleShort: oneutilization.Vehicle.slice(-4), // Last 4 characters for display
     utilization: oneutilization.Utilization,
     fullVehicleNo: oneutilization.Vehicle,
+    type: oneutilization.type || "Unknown",
   }));
 
   // Custom color function based on utilization percentage
@@ -45,6 +46,10 @@ const VehicleUtilizationChart = ({
           <p className="text-blue-600">
             <span className="font-medium">Utilization: </span>
             <span className="font-bold">{`${data.value}%`}</span>
+          </p>
+          <p className="text-blue-600">
+            <span className="font-medium">Type: </span>
+            <span className="font-bold">{data.payload.type}</span>
           </p>
           <div className="mt-1 text-xs text-gray-500">
             {(data.value ?? 0) >= 150 && "⚠️ Critical - Over utilized"}
