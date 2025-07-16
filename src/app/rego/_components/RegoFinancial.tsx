@@ -15,11 +15,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useEffect, useState } from "react";
-import { RegoFinancialData } from "@/lib/types";
+import { RegoFinancialData, RegoPieData } from "@/lib/types";
 import Loading from "@/components/Loading";
 import RegoFinancialCard from "./RegoFinancialsCard";
 import Link from "next/link";
 import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
+import PieChartCard from "./pieChartCard";
 
 // const financialData = [
 //   {
@@ -52,6 +53,7 @@ import { DATA_REFRESH_INTERVAL } from "@/lib/constants";
 //   // Add more months as needed
 // ];
 
+
 export default function RegoFinancialSection() {
   // const [selectedStatus, setSelectedStatus] = useState("All Payments");
   const [FinancialsMonth, setFinancialsMonth] = useState("OVERALL");
@@ -64,18 +66,17 @@ export default function RegoFinancialSection() {
   const [SelectedMonthData, setSelectedMonthData] = useState<
     RegoFinancialData[] | undefined
   >();
-  const chartData = FinancialDataBar
-    ?.map((item) => {
-      if (item.month === "OVERALL") return undefined;
-      else
-        return {
-          name: item.month,
-          Paid: item.paid,
-          Hold: item.hold,
-          Deductions: item.deductions,
-        };
-    })
-    .filter((item) => item !== undefined);
+  const [SelectedMonthPieData, setSelectedMonthPieData]= useState<RegoPieData[] | undefined>(undefined);
+  const chartData = FinancialDataBar?.map((item) => {
+    if (item.month === "OVERALL") return undefined;
+    else
+      return {
+        name: item.month,
+        Paid: item.paid,
+        Hold: item.hold,
+        Deductions: item.deductions,
+      };
+  }).filter((item) => item !== undefined);
 
   useEffect(() => {
     async function fetchTheData() {
@@ -133,7 +134,24 @@ export default function RegoFinancialSection() {
   useEffect(() => {
     const SelectedMonthDatalocal: RegoFinancialData[] | undefined =
       FinancialData?.filter((item) => item.month === FinancialsMonth);
+    const SelectedMonthPieDATA:RegoPieData[]=[
+      
+      {
+        name: "On Hold",
+        value: SelectedMonthDatalocal?.[0]?.hold ?? 0,
+      },
+      {
+        name: "Deductions",
+        value: SelectedMonthDatalocal?.[0]?.deductions ?? 0,
+      },
+      {
+        name: "RML Approved",
+        value: SelectedMonthDatalocal?.[0]?.paid ?? 0,
+      }
+    ];
+
     setSelectedMonthData(SelectedMonthDatalocal);
+    setSelectedMonthPieData(SelectedMonthPieDATA);
   }, [FinancialsMonth, FinancialData]);
 
   return (
@@ -264,36 +282,40 @@ export default function RegoFinancialSection() {
               </CardContent>
             </Card> */}
           </div>
-
-          <div className="bg-white rounded-xl shadow p-4">
-            <ResponsiveContainer width="100%" height={450}>
-              <BarChart
-                data={chartData}
-                barSize={100}
-                margin={{ top: 20, right: 30, left: 50, bottom: 10 }}
-              >
-                <XAxis
-                  dataKey="name"
-                  tick={{ fontSize: 18, fontWeight: "bold", fill: "#374151" }}
-                />
-                <YAxis
-                  tick={{ fontSize: 18, fontWeight: "bold", fill: "#374151" }}
-                  tickFormatter={(value) => `${(value / 100000).toFixed(1)}L`}
-                />
-                <Tooltip
-                  // formatter={(value: number) => [
-                  //   `${(value).toLocaleString("en-IN")}`,
-                  //   "",
-                  // ]}
-                  labelStyle={{ fontSize: 16 }}
-                  itemStyle={{ fontSize: 16 }}
-                />
-                <Legend />
-                <Bar dataKey="Paid" stackId="a" fill="#4ade80" />
-                <Bar dataKey="Hold" stackId="a" fill="#facc15" />
-                <Bar dataKey="Deductions" stackId="a" fill="#f87171" />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="flex flex-col md:flex-row gap-4 ">
+            <div className="bg-white rounded-xl shadow p-4 my-4 md:my-0 flex flex-col md:flex-row gap-4 w-1/2">
+              <ResponsiveContainer width="100%" height={450}>
+                <BarChart
+                  data={chartData}
+                  barSize={80}
+                  margin={{ top: 20, right: 30, left: 50, bottom: 10 }}
+                >
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fontSize: 18, fontWeight: "bold", fill: "#374151" }}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 18, fontWeight: "bold", fill: "#374151" }}
+                    tickFormatter={(value) => `${(value / 100000).toFixed(1)}L`}
+                  />
+                  <Tooltip
+                    // formatter={(value: number) => [
+                    //   `${(value).toLocaleString("en-IN")}`,
+                    //   "",
+                    // ]}
+                    labelStyle={{ fontSize: 16 }}
+                    itemStyle={{ fontSize: 16 }}
+                  />
+                  <Legend />
+                  <Bar dataKey="Paid" stackId="a" fill="#4ade80" />
+                  <Bar dataKey="Hold" stackId="a" fill="#facc15" />
+                  <Bar dataKey="Deductions" stackId="a" fill="#f87171" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="w-1/2">
+              <PieChartCard data={SelectedMonthPieData} />
+            </div>
           </div>
 
           <div className="overflow-x-auto">

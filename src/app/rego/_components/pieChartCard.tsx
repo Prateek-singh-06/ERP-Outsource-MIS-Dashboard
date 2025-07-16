@@ -7,7 +7,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recha
 //   { name: 'Base rent', value: 2648900 },
 // ];
 
-const COLORS = ['#7582FF', '#87C9F5', '#67D5D0'];
+const COLORS = ['#eab308', '#ef4444', '#67D5D0'];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -49,14 +49,14 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default function PieChartCard({ data }: { data: RegoPieData[] }) {
+export default function PieChartCard({ data }: { data: RegoPieData[]|undefined }) {
   return (
     <div
       className="w-full h-full flex flex-col transition-shadow duration-300 rounded-2xl shadow-xl hover:shadow-2xl"
       style={{
         background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)',
         border: '1px solid #e0e7ff',
-        padding: 32,
+        padding: 20,
         boxSizing: 'border-box',
       }}
     >
@@ -71,10 +71,10 @@ export default function PieChartCard({ data }: { data: RegoPieData[] }) {
           textShadow: '0 2px 8px rgba(120,120,180,0.08)',
         }}
       >
-        Rego Charges Distribution
+        Rego Payment Distribution
       </h2>
       {/* Description */}
-      <p
+      {/* <p
         className="mb-6"
         style={{
           fontSize: 15,
@@ -85,7 +85,7 @@ export default function PieChartCard({ data }: { data: RegoPieData[] }) {
         }}
       >
         This chart shows the distribution of rego charges across different categories, including extra hour charge, extra KM charge, and base rent.
-      </p>
+      </p> */}
       {/* Chart */}
       <div
         className="flex-1 flex items-center justify-center rounded-xl"
@@ -96,7 +96,7 @@ export default function PieChartCard({ data }: { data: RegoPieData[] }) {
           padding: 16,
         }}
       >
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={375}>
           <PieChart>
             <Pie
               data={data}
@@ -104,7 +104,7 @@ export default function PieChartCard({ data }: { data: RegoPieData[] }) {
               cy="50%"
               label={renderCustomizedLabel}
               labelLine={false}
-              outerRadius="90%"
+              outerRadius="100%"
               innerRadius="45%"
               fill="#8884d8"
               dataKey="value"
@@ -116,7 +116,7 @@ export default function PieChartCard({ data }: { data: RegoPieData[] }) {
               stroke="#fff"
               strokeWidth={2}
             >
-              {data.map((entry, index) => (
+              {data?.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
