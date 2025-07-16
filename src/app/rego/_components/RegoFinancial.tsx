@@ -53,20 +53,7 @@ import PieChartCard from "./pieChartCard";
 //   // Add more months as needed
 // ];
 
-const PieData: RegoPieData[] = [
-  {
-    name: "RML Approved",
-    value: 5000000,
-  },
-  {
-    name: "On Hold",
-    value: 300000,
-  },
-  {
-    name: "Deductions",
-    value: 11441,
-  },
-];
+
 export default function RegoFinancialSection() {
   // const [selectedStatus, setSelectedStatus] = useState("All Payments");
   const [FinancialsMonth, setFinancialsMonth] = useState("OVERALL");

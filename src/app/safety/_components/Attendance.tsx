@@ -21,10 +21,7 @@ import {
 import {
   Users,
   Calendar,
-  Coffee,
-  PartyPopper,
   Heart,
-  DollarSign,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import MyModal from "./MyModal";
