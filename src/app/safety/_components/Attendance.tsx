@@ -230,8 +230,8 @@ export default function AttendanceDashboard({
                 </CardContent>
               </Card>
             </div> */}
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
-              <Card className=" cursor-pointer py-0 " >
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+              <Card className=" cursor-pointer py-0 ">
                 <CardContent className="flex flex-col items-center justify-center py-4">
                   <Users className="text-purple-700 mb-1" />
                   <p className="text-sm text-muted-foreground">Employees</p>
@@ -240,8 +240,6 @@ export default function AttendanceDashboard({
                   </p>
                 </CardContent>
               </Card>
-             
-              
 
               <Card className=" cursor-pointer py-0  ">
                 <CardContent className="flex flex-col items-center justify-center py-4">
@@ -253,7 +251,7 @@ export default function AttendanceDashboard({
                 </CardContent>
               </Card>
 
-              <Card className=" cursor-pointer py-0  ">
+              {/* <Card className=" cursor-pointer py-0  ">
                 <CardContent className="flex flex-col items-center justify-center py-4">
                   <Coffee className="text-purple-700 mb-1" />
                   <p className="text-sm text-muted-foreground">WeeklyOff</p>
@@ -261,9 +259,9 @@ export default function AttendanceDashboard({
                     {data.summary.weeklyOff}
                   </p>
                 </CardContent>
-              </Card>
+              </Card> */}
 
-              <Card className=" cursor-pointer py-0  ">
+              {/* <Card className=" cursor-pointer py-0  ">
                 <CardContent className="flex flex-col items-center justify-center py-4">
                   <PartyPopper className="text-purple-700 mb-1" />
                   <p className="text-sm text-muted-foreground">Holidays</p>
@@ -271,9 +269,9 @@ export default function AttendanceDashboard({
                     {data.summary.Holidays}
                   </p>
                 </CardContent>
-              </Card>
+              </Card> */}
 
-              <Card className=" cursor-pointer py-0  ">
+              {/* <Card className=" cursor-pointer py-0  ">
                 <CardContent className="flex flex-col items-center justify-center py-4">
                   <Heart className="text-purple-700 mb-1" />
                   <p className="text-sm text-muted-foreground">Paid Leaves</p>
@@ -281,9 +279,20 @@ export default function AttendanceDashboard({
                     {data.summary.paidLeaves}
                   </p>
                 </CardContent>
+              </Card> */}
+              <Card className=" cursor-pointer py-0  ">
+                <CardContent className="flex flex-col items-center justify-center py-4">
+                  <Heart className="text-purple-700 mb-1" />
+                  <p className="text-sm text-muted-foreground">Absent</p>
+                  <p className="text-xl font-semibold">
+                    {(data.summary.paidLeaves ?? 0) +
+                      (data.summary.Holidays ?? 0) +
+                      (data.summary.weeklyOff ?? 0)}
+                  </p>
+                </CardContent>
               </Card>
 
-              <Card className=" cursor-pointer py-0  ">
+              {/* <Card className=" cursor-pointer py-0  ">
                 <CardContent className="flex flex-col items-center justify-center py-4">
                   <DollarSign className="text-purple-700 mb-1" />
                   <p className="text-sm text-muted-foreground text-center">
@@ -293,9 +302,9 @@ export default function AttendanceDashboard({
                     {data.summary.totalPresents}
                   </p>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
-            
+
             <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
               <Select
                 value={SelectedPlant ?? undefined}
@@ -350,12 +359,24 @@ export default function AttendanceDashboard({
               <Table>
                 <TableHeader className="bg-purple-700 text-white">
                   <TableRow>
-                    <TableHead className="text-white text-center">SL No</TableHead>
-                    <TableHead className="text-white text-center">Name</TableHead>
-                    <TableHead className="text-white text-center">Designation</TableHead>
-                    <TableHead className="text-white text-center">Mobile No.</TableHead>
-                    <TableHead className="text-white text-center">Plant</TableHead>
-                    <TableHead className="text-white text-center">Workdays</TableHead>
+                    <TableHead className="text-white text-center">
+                      SL No
+                    </TableHead>
+                    <TableHead className="text-white text-center">
+                      Name
+                    </TableHead>
+                    <TableHead className="text-white text-center">
+                      Designation
+                    </TableHead>
+                    <TableHead className="text-white text-center">
+                      Mobile No.
+                    </TableHead>
+                    <TableHead className="text-white text-center">
+                      Plant
+                    </TableHead>
+                    <TableHead className="text-white text-center">
+                      Workdays
+                    </TableHead>
                     {/* <TableHead className="text-white">
                       National Holidays
                     </TableHead>
@@ -390,7 +411,12 @@ export default function AttendanceDashboard({
                         <TableCell>{employee.workdays}</TableCell>
                         {/* <TableCell>{employee.NationalHolidays}</TableCell> */}
                         {/* <TableCell>{employee.weeklyOff}</TableCell> */}
-                        <TableCell>{employee.leaves+employee.PaidLeaves+employee.weeklyOff+employee.NationalHolidays}</TableCell>
+                        <TableCell>
+                          {employee.leaves +
+                            employee.PaidLeaves +
+                            employee.weeklyOff +
+                            employee.NationalHolidays}
+                        </TableCell>
                         {/* <TableCell>{employee.PaidLeaves}</TableCell> */}
                         {/* <TableCell>{employee.TotalDaysForPayment}</TableCell> */}
                       </TableRow>

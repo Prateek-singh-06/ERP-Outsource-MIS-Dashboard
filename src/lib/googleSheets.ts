@@ -167,21 +167,22 @@ export async function fetchGoogleSheetDataSafteyAttendance(
 
   // Assert type for data rows
   const typedData = data as Array<Record<string, number>>;
+  const length=typedData.length;
   function convertAttendanceData(
     rawData: Array<Record<string, number>>
   ): SafetyAttendanceData {
     const summary: SafetyAttendanceSummary = {
-      totalEmployees: 16,
-      totalWorkdays: rawData[19]["_38"],
-      totalLeaves: rawData[19]["_43"],
-      totalPresents: rawData[19]["_45"],
-      paidLeaves: rawData[19]["_44"],
-      weeklyOff: rawData[19]["_40"],
-      Holidays: rawData[19]["_39"],
+      totalEmployees: length-8,
+      totalWorkdays: rawData[length-5]["_38"],
+      totalLeaves: rawData[length-5]["_43"],
+      totalPresents: rawData[length-5]["_45"],
+      paidLeaves: rawData[length-5]["_44"],
+      weeklyOff: rawData[length-5]["_40"],
+      Holidays: rawData[length-5]["_39"],
     };
     console.log(summary);
     const employees = [];
-    for (let i = 3; i < 19; i++) {
+    for (let i = 3; i < length-5; i++) {
       const row = rawData[i];
       if (!row[""]) {
         summary.totalEmployees = i - 3;
