@@ -307,6 +307,7 @@ export async function fetchGoogleSheetDataRego(
       }
     }
   }
+  
   regosummary.AverageKMPerVehiclePerDay =
     regosummary.TotalKM / (regosummary.TotalDays ?? 1);
   regosummary.AverageExtraKMPerVehiclePerDay =
