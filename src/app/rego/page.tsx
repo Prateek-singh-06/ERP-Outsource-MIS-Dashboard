@@ -22,6 +22,7 @@ import {
 import VehicleUtilizationChart from "./_components/Utilization";
 import MonthWiseBill from "./_components/Monthwisebill";
 import RegoFinancial from "./_components/RegoFinancial";
+import Seat_utilization from "./_components/Seat_utilization";
 type VehicleType = 'all' | 'BOLERO' | 'BUS' | 'TRAVELLER' | 'WINGER';
 export default function RegoPage() {
   const [rego, setRego] = useState<Rego | null>(null);
@@ -427,6 +428,9 @@ export default function RegoPage() {
               UtilizationData={rego.Utilization}
               type={Type}
             />
+          </div>
+          <div>
+            <Seat_utilization/>
           </div>
           <div className="w-full h-auto mb-10 ">
             <MonthWiseBill type={Type}  />
