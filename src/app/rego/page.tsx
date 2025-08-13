@@ -25,7 +25,7 @@ import RegoFinancial from "./_components/RegoFinancial";
 type VehicleType = 'all' | 'BOLERO' | 'BUS' | 'TRAVELLER' | 'WINGER';
 export default function RegoPage() {
   const [rego, setRego] = useState<Rego | null>(null);
-  const [month, setMonth] = useState<string>("MAY 2025");
+  const [month, setMonth] = useState<string>("JULY 2025");
   const [Type, setType] = useState<VehicleType>("all");
 
   useEffect(() => {
@@ -222,6 +222,7 @@ export default function RegoPage() {
                       <SelectItem value="APRIL 2025" >APRIL</SelectItem>
                       <SelectItem value="MAY 2025" >MAY</SelectItem>
                       <SelectItem value="JUNE 2025" >JUNE</SelectItem>
+                      <SelectItem value="JULY 2025" >JULY</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -328,7 +329,7 @@ export default function RegoPage() {
                 title="Total Bill"
                 type="rupee"
                 value={Math.round(rego.Summary.TotalExtraBill).toLocaleString('en-IN')}
-                subtitle="Total extra bill incurred "
+                subtitle="Total bill incurred "
                 icon={icons["Total Extra Bill"]}
                 hoverEffect="purple"
                 className="bg-white hover:bg-green-50 focus:ring-green-500"
