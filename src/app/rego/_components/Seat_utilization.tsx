@@ -32,8 +32,8 @@ const Dashboard = () => {
   const rawData = [
     {
       vehicle: "WB19Q6112",
-      pickup: 14,
-      drop: 3,
+      pickup: 3,
+      drop: 14,
       total: 100,
       type: "BUS",
       duty: 12,
@@ -43,8 +43,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB19Q6125",
-      pickup: 4,
-      drop: 0,
+      pickup: 0,
+      drop: 4,
       total: 100,
       type: "BUS",
       duty: 12,
@@ -54,8 +54,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB19Q6360",
-      pickup: 20,
-      drop: 5,
+      pickup: 5,
+      drop: 20,
       total: 100,
       type: "BUS",
       duty: 12,
@@ -65,8 +65,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB19Q6610",
-      pickup: 20,
-      drop: 5,
+      pickup: 5,
+      drop: 20,
       total: 100,
       type: "BUS",
       duty: 12,
@@ -76,8 +76,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB19Q6649",
-      pickup: 32,
-      drop: 7,
+      pickup: 7,
+      drop: 32,
       total: 100,
       type: "BUS",
       duty: 12,
@@ -87,8 +87,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB25P9979",
-      pickup: 7,
-      drop: 2,
+      pickup: 2,
+      drop: 7,
       total: 100,
       type: "TRAVELLER",
       duty: 12,
@@ -98,8 +98,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB25R9885",
-      pickup: 1,
-      drop: 0,
+      pickup: 0,
+      drop: 1,
       total: 100,
       type: "TRAVELLER",
       duty: 12,
@@ -109,8 +109,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB29C4709",
-      pickup: 5,
-      drop: 1,
+      pickup: 1,
+      drop: 5,
       total: 100,
       type: "TRAVELLER",
       duty: 12,
@@ -120,8 +120,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB33J5120",
-      pickup: 15,
-      drop: 1,
+      pickup: 1,
+      drop: 15,
       total: 100,
       type: "BUS",
       duty: 12,
@@ -131,8 +131,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB33J8490",
-      pickup: 10,
-      drop: 0,
+      pickup: 0,
+      drop: 10,
       total: 100,
       type: "WINGER",
       duty: 12,
@@ -142,8 +142,8 @@ const Dashboard = () => {
     },
     {
       vehicle: "WB33J8492",
-      pickup: 1,
-      drop: 0,
+      pickup: 0,
+      drop: 1,
       total: 100,
       type: "WINGER",
       duty: 12,
@@ -177,9 +177,9 @@ const Dashboard = () => {
   // Performance data for each vehicle
   const performanceData = rawData.map((item) => ({
     vehicle: item.vehicle.slice(-4), // Last 4 chars for cleaner display
-    utilization: Math.round((item.total / item.seats) * 100),
+    utilization: Math.round((item.total / item.seats) * 10),
     efficiency: Math.round(
-      ((item.pickup + item.drop) / (item.seats * 2)) * 100
+      ((item.pickup + item.drop) / (item.seats * 2)) * 10
     ),
     pickupPercent: item.pickupPercent,
     dropPercent: item.dropPercent,
@@ -207,7 +207,7 @@ const Dashboard = () => {
     )
   ).map(([type, data]) => ({
     type,
-    utilization: Math.round((data.total / data.capacity) * 100),
+    utilization: Math.round((data.total / data.capacity) * 10),
     avgCapacity: Math.round(data.capacity / data.count),
     totalTrips: data.total,
   }));
@@ -403,9 +403,9 @@ const Dashboard = () => {
                   />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="pickup" fill="#3B82F6" name="Pickups" />
-                  {/* <Bar dataKey="drop" fill="#EF4444" name="Drops" /> */}
-                  <Bar dataKey="total" fill="#88E788" name="Total" />
+                  <Bar dataKey="pickupPercent" fill="#C4B454" name="Pickup%" />
+                  <Bar dataKey="dropPercent" fill="#3B82F6" name="Drop%" />
+                  
                 </BarChart>
               </ResponsiveContainer>
             </div>

@@ -224,6 +224,7 @@ export default function RegoPage() {
                       <SelectItem value="MAY 2025" >MAY</SelectItem>
                       <SelectItem value="JUNE 2025" >JUNE</SelectItem>
                       <SelectItem value="JULY 2025" >JULY</SelectItem>
+                      <SelectItem value="AUGUST 2025" >AUGUST</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
