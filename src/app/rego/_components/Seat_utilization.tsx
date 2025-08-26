@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -26,11 +26,14 @@ import {
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
-  const [selectedMonth, setSelectedMonth] = useState("29th July 2025");
+  const [selectedDate, setSelectedDate] = useState("2025-07-29");
+  const [selectedType, setSelectedType] = useState("ALL");
+  const [filteredData, setFilteredData] = useState<typeof rawData | null>();
 
   // Raw data
   const rawData = [
     {
+      date: "2025-07-29",
       vehicle: "WB19Q6112",
       pickup: 3,
       drop: 14,
@@ -42,6 +45,7 @@ const Dashboard = () => {
       dropPercent: 25,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB19Q6125",
       pickup: 0,
       drop: 4,
@@ -53,6 +57,7 @@ const Dashboard = () => {
       dropPercent: 7,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB19Q6360",
       pickup: 5,
       drop: 20,
@@ -64,6 +69,7 @@ const Dashboard = () => {
       dropPercent: 36,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB19Q6610",
       pickup: 5,
       drop: 20,
@@ -75,6 +81,7 @@ const Dashboard = () => {
       dropPercent: 36,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB19Q6649",
       pickup: 7,
       drop: 32,
@@ -86,6 +93,7 @@ const Dashboard = () => {
       dropPercent: 58,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB25P9979",
       pickup: 2,
       drop: 7,
@@ -97,6 +105,7 @@ const Dashboard = () => {
       dropPercent: 28,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB25R9885",
       pickup: 0,
       drop: 1,
@@ -108,6 +117,7 @@ const Dashboard = () => {
       dropPercent: 4,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB29C4709",
       pickup: 1,
       drop: 5,
@@ -119,6 +129,7 @@ const Dashboard = () => {
       dropPercent: 20,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB33J5120",
       pickup: 1,
       drop: 15,
@@ -130,6 +141,7 @@ const Dashboard = () => {
       dropPercent: 27,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB33J8490",
       pickup: 0,
       drop: 10,
@@ -141,6 +153,7 @@ const Dashboard = () => {
       dropPercent: 100,
     },
     {
+      date: "2025-07-29",
       vehicle: "WB33J8492",
       pickup: 0,
       drop: 1,
@@ -151,7 +164,96 @@ const Dashboard = () => {
       pickupPercent: 0,
       dropPercent: 10,
     },
+    {
+      date: "2025-07-30",
+      vehicle: "WB19Q7001",
+      pickup: 4,
+      drop: 12,
+      total: 90,
+      type: "BUS",
+      duty: 10,
+      seats: 55,
+      pickupPercent: 7,
+      dropPercent: 22,
+    },
+    {
+      date: "2025-07-30",
+      vehicle: "WB25P9980",
+      pickup: 2,
+      drop: 8,
+      total: 80,
+      type: "TRAVELLER",
+      duty: 11,
+      seats: 25,
+      pickupPercent: 8,
+      dropPercent: 32,
+    },
+    {
+      date: "2025-07-30",
+      vehicle: "WB33J8493",
+      pickup: 1,
+      drop: 9,
+      total: 60,
+      type: "WINGER",
+      duty: 9,
+      seats: 10,
+      pickupPercent: 10,
+      dropPercent: 90,
+    },
+    {
+      date: "2025-07-30",
+      vehicle: "WB19Q6126",
+      pickup: 2,
+      drop: 6,
+      total: 85,
+      type: "BUS",
+      duty: 10,
+      seats: 55,
+      pickupPercent: 4,
+      dropPercent: 11,
+    },
+    {
+      date: "2025-07-30",
+      vehicle: "WB25P9981",
+      pickup: 3,
+      drop: 7,
+      total: 70,
+      type: "BOLERO",
+      duty: 8,
+      seats: 7,
+      pickupPercent: 10,
+      dropPercent: 20,
+    },
+    {
+      date: "2025-07-30",
+      vehicle: "WB33J8494",
+      pickup: 1,
+      drop: 5,
+      total: 50,
+      type: "WINGER",
+      duty: 7,
+      seats: 10,
+      pickupPercent: 10,
+      dropPercent: 50,
+    },
   ];
+
+  useEffect(() => {
+    console.log(rawData,selectedDate,selectedType);
+
+    const filteredRawData =
+      selectedType === "ALL"
+        ? selectedDate === "OVERALL"
+          ? rawData
+          : rawData.filter((item) => item.date === selectedDate)
+        : selectedDate === "OVERALL"
+        ? rawData.filter((item) => item.type === selectedType)
+        : rawData.filter(
+            (item) => item.type === selectedType && item.date === selectedDate
+          );
+    setFilteredData(filteredRawData);
+    console.log("Filtered Data:", filteredRawData);
+  }, [selectedDate,selectedType]);
 
   // Calculate summary statistics
   const totalPickups = rawData.reduce((sum, item) => sum + item.pickup, 0);
@@ -168,19 +270,23 @@ const Dashboard = () => {
     {}
   );
 
-  const typeData = Object.entries(vehicleTypes).map(([type, count]) => ({
-    name: type,
-    value: count,
-  }));
-  console.log(typeData);
+  // const typeData = Object.entries(vehicleTypes).map(([type, count]) => ({
+  //   name: type,
+  //   value: count,
+  // }));
+  const typeData = [
+    { name: "BUS", value: 12 },
+    { name: "BOLERO", value: 12 },
+    { name: "WINGER", value: 7 },
+    { name: "TRAVELLER", value: 3 },
+  ];
+  // console.log(typeData);
 
   // Performance data for each vehicle
   const performanceData = rawData.map((item) => ({
     vehicle: item.vehicle.slice(-4), // Last 4 chars for cleaner display
     utilization: Math.round((item.total / item.seats) * 10),
-    efficiency: Math.round(
-      ((item.pickup + item.drop) / (item.seats * 2)) * 10
-    ),
+    efficiency: Math.round(((item.pickup + item.drop) / (item.seats * 2)) * 10),
     pickupPercent: item.pickupPercent,
     dropPercent: item.dropPercent,
     total: item.total,
@@ -331,17 +437,28 @@ const Dashboard = () => {
             />
           </div>
           <div className="mb-4">
-          <select
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(e.target.value)}
-            className="px-3 py-2 border rounded-lg text-gray-700"
-          >
-            <option>29th July 2025</option>
-            <option>30th July 2025</option>
-            <option>31st July 2025</option>
-            
-          </select>
-        </div>
+            <select
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="px-3 py-2 border rounded-lg text-gray-700"
+            >
+              {/* <option>OVERALL</option> */}
+              {[...new Set(rawData.map((item) => item.date))].map((date) => (
+                <option key={date} value={date}>
+                  {date}
+                </option>
+              ))}
+            </select>
+            {/* <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              className="px-3 py-2 border rounded-lg text-gray-700"
+            >
+              <option>29th July 2025</option>
+              <option>30th July 2025</option>
+              <option>31st July 2025</option>
+            </select> */}
+          </div>
         </div>
 
         {/* Tab Content */}
@@ -388,26 +505,57 @@ const Dashboard = () => {
 
             {/* Pickup vs Drop Comparison */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Pickup vs Drop Operations
-              </h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={rawData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="vehicle"
-                    angle={-45}
-                    textAnchor="end"
-                    height={80}
-                    fontSize={10}
-                  />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="pickupPercent" fill="#C4B454" name="Pickup%" />
-                  <Bar dataKey="dropPercent" fill="#3B82F6" name="Drop%" />
-                  
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  Pickup vs Drop Operations
+                </h3>
+                <div className="mb-4">
+                  <select
+                    value={selectedType}
+                    onChange={(e) => setSelectedType(e.target.value)}
+                    className="px-3 py-2 border rounded-lg text-gray-700"
+                  >
+                    <option>ALL</option>
+                    <option>BUS</option>
+                    <option>BOLERO</option>
+                    <option>WINGER</option>
+                    <option>TRAVELLER</option>
+                  </select>
+                </div>
+              </div>
+              {filteredData && filteredData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={filteredData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="vehicle"
+                      angle={-45}
+                      textAnchor="end"
+                      height={80}
+                      fontSize={10}
+                    />
+                    <YAxis />
+                    <Tooltip
+                      labelFormatter={(label, payload) => {
+                        if (payload && payload.length > 0) {
+                          return `Vehicle: ${label} (${payload[0].payload.type})`;
+                        }
+                        return `Vehicle: ${label}`;
+                      }}
+                    />
+                    <Bar
+                      dataKey="pickupPercent"
+                      fill="#C4B454"
+                      name="Pickup%"
+                    />
+                    <Bar dataKey="dropPercent" fill="#3B82F6" name="Drop%" />
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="text-center text-gray-500 py-12">
+                  No data available for this type.
+                </div>
+              )}
             </div>
           </div>
         )}
