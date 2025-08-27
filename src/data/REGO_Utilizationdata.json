@@ -30,5 +30,13 @@
         "BUS":97,
         "TRAVELLER":90,
         "WINGER":98
+    },
+    {
+        "MONTH":"AUGUST 2025",
+        "all":102,
+        "BOLERO":129,
+        "BUS":96,
+        "TRAVELLER":81,
+        "WINGER":75
     }
 ]
